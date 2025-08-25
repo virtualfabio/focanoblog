@@ -12,4 +12,11 @@ npx @11ty/eleventy --serve
 
 
 
+
+
 firebase deploy
+
+
+--gitgub
+git remote add origin https://github.com/virtualfabio/focanoblog.git
+git push -u origin main
