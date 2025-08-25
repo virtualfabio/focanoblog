@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título dinâmico da página -->
+    <title>{{ title }} | Meu Blog de Tecnologia</title>
+
+    <meta name="description" content="Descubra os melhores notebooks para programadores em 2025. Guia completo com análise, recomendações e links de compra." />
+    <meta name="keywords" content="notebooks programadores, melhores notebooks 2025, notebook custo-benefício" />
+    <meta name="author" content="Fabio F.S." />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link para o arquivo CSS de estilos -->
+    <link rel="stylesheet" href="./public/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
+      .text-blue-600 { color: var(--color-blue); }
+      .text-red-500 { color: var(--color-red); }
+      .hover\\:text-red-500:hover { color: var(--color-red); }
+    </style>
+    
+</head>
+
+<body class="bg-white text-gray-800 antialiased">
+
+    {% include "header.html" %}
+
+    <!-- Layout Principal com Colunas Laterais para Anúncios -->
+    <div class="container mx-auto px-4 md:px-0 lg:grid lg:grid-cols-4 lg:gap-12">
+
+        <!-- Coluna Central com Conteúdo Principal -->
+        <main class="lg:col-span-3">
+
+            <!-- Seção de Artigos em Destaque -->
+            <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for post in collections.destaques %}
+                        <a href="{{ post.url }}" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ post.data.title }}</h3>
+                        <p class="text-gray-600 mb-4">{{ post.data.description }}...</p>
+                        <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+                <div class="flex flex-col gap-2 mb-4">
+                    <div class="flex flex-wrap gap-2">
+                    <input id="pesquisa" type="text" placeholder="Pesquisar..." class="text-blue-600 campo px-2 py-1 border rounded flex-1">
+                    </div>
+
+                    <div id="filtrosCategorias" class="flex flex-wrap gap-4 mt-2"></div>
+                </div>
+                <main id="lista-artigos" class="container mx-auto px-4 md:px-8">
+                    <div id="artigos-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    </div>
+                </main>
+            </section>
+        </main>
+
+        <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
+        <aside class="hidden lg:block">
+            <div class="pt-[60px]"></div>
+            <div class="p-4 bg-gray-100 rounded-lg text-center mb-8">
+                <h4 class="font-bold mb-2">Anúncio</h4>
+                <a href="#" class="block bg-white p-4 rounded-md shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                    <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                    <p class="text-sm">Confira esta oferta especial!</p>
+                </a>
+            </div>
+            <!-- Você pode adicionar mais anúncios aqui -->
+        </aside>
+    </div>
+
+
+    {% include "anuncios.html" %}
+
+    {% include "footer.html" %}
+
+    <script>
+        // Gera o array de artigos já no build
+        window.artigos = [
+            {% for post in collections.artigos %}
+            {
+            "title": {{ post.data.title | jsonify }},
+            "url": {{ post.url | jsonify }},
+            "categorias": {{ post.data.categorias | jsonify }},
+            "date": "{{ post.date | date: "%d/%m/%Y" }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+    <script defer src="./public/js/artigos.js"></script>
+</body>
+
+</html>

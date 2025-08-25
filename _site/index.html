@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título dinâmico da página -->
+    <title> | Meu Blog de Tecnologia</title>
+
+    <meta name="description" content="Descubra os melhores notebooks para programadores em 2025. Guia completo com análise, recomendações e links de compra." />
+    <meta name="keywords" content="notebooks programadores, melhores notebooks 2025, notebook custo-benefício" />
+    <meta name="author" content="Fabio F.S." />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link para o arquivo CSS de estilos -->
+    <link rel="stylesheet" href="./public/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
+      .text-blue-600 { color: var(--color-blue); }
+      .text-red-500 { color: var(--color-red); }
+      .hover\\:text-red-500:hover { color: var(--color-red); }
+    </style>
+    
+</head>
+
+<body class="bg-white text-gray-800 antialiased">
+
+    
+    <!-- Cabeçalho do Blog -->
+    <header class="bg-white shadow-md py-6 fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <!-- Contêiner do título e da linha degradê -->
+            <div class="flex flex-col items-center">
+                    <!-- Título principal do blog com link para a home -->
+                    <a href="/" class="text-3xl font-bold text-gray-900 transition-colors duration-200 hover:text-red-500">
+                    <span class="flex items-center">
+                        <img src="/public/img/foca2-pqn.png" class="mr-3 animate-hue animate-rotate">
+                        Foca&nbsp;<span class="text-blue-600">no Blog</span>
+                    </span>
+                    </a> 
+                </div>
+
+            <!-- Links de navegação -->
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="/" class="nav-link text-gray-800 hover:text-blue-600"></a></li>
+                <li><a href="/artigos/" class="nav-link text-gray-800 hover:text-blue-600">Artigos</a></li>
+                <li><a href="/contatos/" class="nav-link text-gray-800 hover:text-blue-600">Contatos</a></li>
+            </ul>
+
+            <!-- Menu de hambúrguer para dispositivos móveis -->
+            <div class="md:hidden">
+                <button id="menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu de navegação para dispositivos móveis (oculto por padrão) -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 py-2 mt-4 space-y-2 bg-white">
+            <a href="/" class="block text-gray-800 hover:text-blue-600">Home</a>
+            <a href="/artigos/" class="block text-gray-800 hover:text-blue-600">Artigos</a>
+            <a href="/contatos/" class="block text-gray-800 hover:text-blue-600">Contatos</a>
+        </div>
+    </header>
+
+    <div class="pt-[120px]"></div>
+
+    <!-- Layout Principal com Colunas Laterais para Anúncios -->
+    <div class="container mx-auto px-4 md:px-0 lg:grid lg:grid-cols-4 lg:gap-12">
+
+        <!-- Coluna Central com Conteúdo Principal -->
+        <main class="lg:col-span-3">
+
+            <!-- Seção de Artigos em Destaque -->
+            <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                        <a href="/artigos/como-construir-um-blog/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Como construir um blog com HTML, Eleventy, JS e IA</h3>
+                        <p class="text-gray-600 mb-4">Este é um artigo detalhado sobre 1...</p>
+                        <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
+                        </a>
+                    
+                        <a href="/artigos/entenda-o-s-do-solid/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Entendendo o "S" do SOLID</h3>
+                        <p class="text-gray-600 mb-4">Entenda de maneira prática e fácil o "Single Responsibility Principle"......</p>
+                        <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
+                        </a>
+                    
+                </div>
+            </section>
+
+            <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+                <div class="flex flex-col gap-2 mb-4">
+                    <div class="flex flex-wrap gap-2">
+                    <input id="pesquisa" type="text" placeholder="Pesquisar..." class="text-blue-600 campo px-2 py-1 border rounded flex-1">
+                    </div>
+
+                    <div id="filtrosCategorias" class="flex flex-wrap gap-4 mt-2"></div>
+                </div>
+                <main id="lista-artigos" class="container mx-auto px-4 md:px-8">
+                    <div id="artigos-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    </div>
+                </main>
+            </section>
+        </main>
+
+        <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
+        <aside class="hidden lg:block">
+            <div class="pt-[60px]"></div>
+            <div class="p-4 bg-gray-100 rounded-lg text-center mb-8">
+                <h4 class="font-bold mb-2">Anúncio</h4>
+                <a href="#" class="block bg-white p-4 rounded-md shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                    <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                    <p class="text-sm">Confira esta oferta especial!</p>
+                </a>
+            </div>
+            <!-- Você pode adicionar mais anúncios aqui -->
+        </aside>
+    </div>
+
+
+          <!-- Nova Seção para Anúncios (visível em todas as telas) -->
+    <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+        <!-- Grid para exibir os anúncios em colunas, com ajuste responsivo -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Card de Anúncio 1 -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 1" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Clique aqui para um produto incrível!</p>
+            </a>
+            
+            <!-- Card de Anúncio 2 -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+2" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Confira esta oferta especial!</p>
+            </a>
+
+            <!-- Card de Anúncio 3 (para exemplificar) -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+3" alt="Anúncio 3" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Mais um produto para você!</p>
+            </a>
+
+        </div>
+    </section>
+
+
+        <!-- Rodapé do Blog -->
+    <footer class="mt-20 py-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+        <div class="container mx-auto px-4 md:px-8">
+            <p>&copy; 2025 TechBlog. Todos os direitos reservados.</p>
+            <p>Criado com <a href="https://www.11ty.dev/" class="text-blue-500 hover:underline">Eleventy</a> e inteligência natural e artificial.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Gera o array de artigos já no build
+        window.artigos = [
+            
+            {
+            "title": "Como construir um blog com HTML, Eleventy, JS e IA",
+            "url": "/artigos/como-construir-um-blog/",
+            "categorias": ["html","js","eleventy","markdown"],
+            "date": "24/08/2025"
+            },
+            
+            {
+            "title": "Entendendo o \"O\" do SOLID",
+            "url": "/artigos/entenda-o-o-do-solid/",
+            "categorias": ["js","solid"],
+            "date": "24/08/2025"
+            },
+            
+            {
+            "title": "Entendendo o \"S\" do SOLID",
+            "url": "/artigos/entenda-o-s-do-solid/",
+            "categorias": ["js","solid"],
+            "date": "25/08/2025"
+            },
+            
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+    <script defer src="./public/js/artigos.js"></script>
+</body>
+
+</html>

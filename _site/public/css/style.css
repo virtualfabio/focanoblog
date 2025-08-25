@@ -1,0 +1,167 @@
+/*
+  Este arquivo contém os estilos CSS para o layout do blog.
+  Ele foi criado para funcionar em conjunto com o Tailwind CSS,
+  e pode ser estendido para personalizar ainda mais o visual.
+*/
+
+/*
+  As classes utilitárias do Tailwind CSS (como bg-gray-50, text-gray-800,
+  flex, etc.) já fornecem a maior parte do estilo. Este arquivo
+  é ideal para regras de estilo mais específicas ou para o conteúdo gerado.
+*/
+
+/* --- Cores e Tipografia --- */
+:root {
+  --color-blue: #14539E;
+  --color-dark-blue: #0d3567;
+  --color-red: #E53E3E;
+  --color-gray-dark: #1A202C;
+  --color-gray-light: #4A5568;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--color-gray-dark);
+}
+
+/* --- Layout e Componentes --- */
+.container {
+    max-width: 1024px;
+}
+
+/* Estilos para o cabeçalho e navegação */
+.nav-link {
+    color: var(--color-gray-light);
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+    color: var(--color-blue);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    font-weight: 600;
+    color: var(--color-blue);
+}
+
+/* --- Conteúdo do Markdown (prose) --- */
+.prose {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.prose h1, .prose h2, .prose h3 {
+    font-weight: 700;
+    color: var(--color-gray-dark);
+}
+
+.prose p {
+    color: var(--color-gray-light);
+}
+
+.prose a {
+    color: var(--color-blue);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.prose a:hover {
+    color: var(--color-red);
+    text-decoration: underline;
+}
+
+/* Estilos para listas */
+.prose ul, .prose ol {
+    margin-top: 1em;
+    padding-left: 1.5em;
+}
+
+.prose li {
+    margin-bottom: 0.5em;
+}
+
+/* Estilos para imagens dentro do conteúdo */
+.prose img {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.prose img:hover {
+  transform: scale(1.02);
+}
+
+.artigo>p{
+    margin-bottom: 12px;
+}
+
+.artigo>ul{
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-bottom: 10px;
+}
+
+.artigo>h1{
+    margin-bottom: 20px;
+    color: var(--color-dark-blue);
+}
+.artigo>h2{
+    color: var(--color-dark-blue);
+    font-size: 120%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.artigo>h3{
+    font-size: 115%;
+    margin-top: 12px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.artigo>hr{
+  margin-top: 10px;
+  margin-bottom: 12px;
+  height: 1px; /* Define a altura da linha */
+  background-color: rgb(207, 168, 168); /* Define a cor do fundo, que será a cor da linha */
+  border: none; 
+}
+
+pre{
+    background-color: #f4f4f4; /* Fundo cinza claro */
+    border: 1px solid #ddd;    /* Borda fina cinza */
+    padding: 10px;             /* Espaçamento interno */
+    overflow-x: auto;          /* Barra de rolagem se o código for muito largo */
+    font-family: "Courier New", Courier, monospace; /* Fonte monoespaçada */
+    color: #333;               /* Cor do texto */
+    margin-bottom: 20px;
+}
+
+.campo{
+    border-color: rgb(207, 168, 168);
+}
+
+
+/* Define a animação de rotação de matiz */
+@keyframes hue-shift {
+0% { filter: hue-rotate(0deg); }
+100% { filter: hue-rotate(360deg); }
+}
+
+/* Aplica a animação de rotação de matiz à imagem */
+.animate-hue {
+    animation: hue-shift 4s linear infinite;
+}
+
+/* Define a animação de rotação e retorno */
+@keyframes rotate-img {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+}
+
+/* Aplica a animação de rotação à imagem */
+.animate-rotate {
+  animation: rotate-img 7s ease-in-out infinite;
+}

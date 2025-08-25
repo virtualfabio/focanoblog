@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título dinâmico da página -->
+    <title>Entendendo o &quot;O&quot; do SOLID | Meu Blog de Tecnologia</title>
+    <!-- Link para a fonte Inter do Google Fonts para um visual moderno -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link para o arquivo CSS de estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <style>
+      /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
+      .text-blue-600 { color: var(--color-blue); }
+      .text-red-500 { color: var(--color-red); }
+      .hover\\:text-red-500:hover { color: var(--color-red); }
+    </style>
+
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    
+    <!-- Cabeçalho do Blog -->
+    <header class="bg-white shadow-md py-6 fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <!-- Contêiner do título e da linha degradê -->
+            <div class="flex flex-col items-center">
+                    <!-- Título principal do blog com link para a home -->
+                    <a href="/" class="text-3xl font-bold text-gray-900 transition-colors duration-200 hover:text-red-500">
+                    <span class="flex items-center">
+                        <img src="/public/img/foca2-pqn.png" class="mr-3 animate-hue animate-rotate">
+                        Foca&nbsp;<span class="text-blue-600">no Blog</span>
+                    </span>
+                    </a> 
+                </div>
+
+            <!-- Links de navegação -->
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="/" class="nav-link text-gray-800 hover:text-blue-600"></a></li>
+                <li><a href="/artigos/" class="nav-link text-gray-800 hover:text-blue-600">Artigos</a></li>
+                <li><a href="/contatos/" class="nav-link text-gray-800 hover:text-blue-600">Contatos</a></li>
+            </ul>
+
+            <!-- Menu de hambúrguer para dispositivos móveis -->
+            <div class="md:hidden">
+                <button id="menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu de navegação para dispositivos móveis (oculto por padrão) -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 py-2 mt-4 space-y-2 bg-white">
+            <a href="/" class="block text-gray-800 hover:text-blue-600">Home</a>
+            <a href="/artigos/" class="block text-gray-800 hover:text-blue-600">Artigos</a>
+            <a href="/contatos/" class="block text-gray-800 hover:text-blue-600">Contatos</a>
+        </div>
+    </header>
+
+    <div class="pt-[120px]"></div>
+
+    <!-- Layout Principal com Colunas Laterais para Anúncios -->
+    <div class="container mx-auto px-4 md:px-0 lg:grid lg:grid-cols-4 lg:gap-12">
+
+        <!-- Coluna Central com Conteúdo Principal -->
+        <main class="lg:col-span-3">
+          <div class="pt-[35px]"></div>
+          <section class="artigo container mx-auto px-4 md:px-8 mt-2 mb-20">
+            <h1 class="text-3xl font-bold text-gray-900">Entendendo o &quot;O&quot; do SOLID</h1>
+            <p>O <strong>SOLID</strong> é um conjunto de princípios de design de software para ajudar desenvolvedores a criarem sistemas mais flexíveis e fáceis de manter.</p>
+<p>Hoje vamos estudar o segundo princípio:</p>
+<h2>🔹 O — Open/Closed Principle (Princípio Aberto/Fechado)</h2>
+<p>Esse princípio afirma que:</p>
+<blockquote>
+<p><strong>&quot;As entidades de software (classes, funções, módulos) devem estar abertas para extensão, mas fechadas para modificação.&quot;</strong></p>
+</blockquote>
+<p>Ou seja:</p>
+<ul>
+<li>Podemos <strong>estender</strong> o comportamento de uma classe ou função.</li>
+<li>Mas <strong>não devemos modificar diretamente</strong> o código existente.</li>
+</ul>
+<p>Isso ajuda a evitar erros quando o sistema já está em produção e promove <strong>reuso e flexibilidade</strong>.</p>
+<hr>
+<h2>🚫 Exemplo errado (violando OCP)</h2>
+<p>Imagine que temos um sistema de pagamento para um blog de <strong>críticas de filmes</strong>.<br>
+Cada pagamento pode ser feito com <strong>Cartão de Crédito</strong> ou <strong>Pix</strong>.</p>
+<pre><code class="language-js">class PaymentProcessor {
+  process(type, amount) {
+    if (type === &quot;creditcard&quot;) {
+      console.log(`Pagamento de R$${amount} no cartão de crédito.`);
+    } else if (type === &quot;pix&quot;) {
+      console.log(`Pagamento de R$${amount} via Pix.`);
+    }
+  }
+}
+</code></pre>
+<h2>👉 Problema:</h2>
+<p>Se amanhã quisermos adicionar PayPal ou Criptomoeda, teremos que alterar o código da classe.<br>
+Isso viola o OCP, porque a classe não está fechada para modificação.</p>
+<hr>
+<h2>✅ Exemplo correto (respeitando OCP)</h2>
+<p>Vamos refatorar usando polimorfismo e herança:</p>
+<pre>
+// Interface (contrato) de um método de pagamento
+class PaymentMethod {
+  pay(amount) {
+    throw new Error("Método não implementado.");
+  }
+}
+
+// Implementações específicas
+class CreditCardPayment extends PaymentMethod {
+  pay(amount) {
+    console.log(`Pagamento de R$${amount} no cartão de crédito.`);
+  }
+}
+
+class PixPayment extends PaymentMethod {
+  pay(amount) {
+    console.log(`Pagamento de R$${amount} via Pix.`);
+  }
+}
+
+// Agora o processador não precisa mudar mais
+class PaymentProcessor {
+  process(paymentMethod, amount) {
+    paymentMethod.pay(amount);
+  }
+}
+</pre>
+<h3>👉 Agora, se quisermos adicionar PayPal, basta criar uma nova classe:</h3>
+<pre>
+class PayPalPayment extends PaymentMethod {
+  pay(amount) {
+    console.log(`Pagamento de R$${amount} via PayPal.`);
+  }
+}
+</pre>
+<p>Perceba que <strong>não precisamos alterar</strong> <em>PaymentProcessor</em>.<br>
+Apenas adicionamos uma nova classe = estamos <strong>estendendo</strong> o sistema, sem modificar o código existente.</p>
+<h2>🎬 Usando o código</h2>
+<pre>
+const processor = new PaymentProcessor();
+
+const credit = new CreditCardPayment();
+const pix = new PixPayment();
+const paypal = new PayPalPayment();
+
+processor.process(credit, 50);
+processor.process(pix, 30);
+processor.process(paypal, 100);
+</pre>
+<h3>Saída esperada:</h3>
+<pre>
+Pagamento de R$50 no cartão de crédito.
+Pagamento de R$30 via Pix.
+Pagamento de R$100 via PayPal.
+</pre>
+<h2>📌 Vantagens do OCP</h2>
+<ul>
+<li>Mais <strong>flexibilidade</strong> para adicionar novas funcionalidades.</li>
+<li>Código existente fica <strong>estável e confiável</strong>.</li>
+<li>Facilita <strong>testes e manutenção</strong>.</li>
+<li>Diminui o risco de introduzir <strong>bugs</strong> ao modificar código antigo.</li>
+</ul>
+<hr>
+<h2>🚀 Conclusão</h2>
+<p>O <strong>O do SOLID</strong> nos mostra a importância de projetar sistemas que sejam <strong>abertos para extensão</strong>, mas <strong>fechados para modificação</strong>.</p>
+<p>No exemplo, conseguimos adicionar novos métodos de pagamento sem alterar o processador central, tornando o sistema mais <strong>robusto e evolutivo</strong>.</p>
+<p><img src="../../public/img/diagrama-classes-solid-o.png" alt="Diagrama de Classes" title="Diagrama de Classes"></p>
+
+           </section>
+        </main>
+
+        <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
+        <aside class="hidden lg:block">
+            <div class="pt-[60px]"></div>
+            <div class="p-4 bg-gray-100 rounded-lg text-center mb-8">
+                <h3 class="font-bold mb-2">Anúncio</h3>
+                <a href="#" class="block bg-white p-3 rounded-md border border-gray-200 hover:shadow-md transition-shadow">
+                    <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                    <p class="text-sm">Confira esta oferta especial!</p>
+                </a>
+            </div>
+
+        </aside>
+    </div>
+
+
+          <!-- Nova Seção para Anúncios (visível em todas as telas) -->
+    <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+        <!-- Grid para exibir os anúncios em colunas, com ajuste responsivo -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Card de Anúncio 1 -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 1" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Clique aqui para um produto incrível!</p>
+            </a>
+            
+            <!-- Card de Anúncio 2 -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+2" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Confira esta oferta especial!</p>
+            </a>
+
+            <!-- Card de Anúncio 3 (para exemplificar) -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+3" alt="Anúncio 3" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Mais um produto para você!</p>
+            </a>
+
+        </div>
+    </section>
+
+
+        <!-- Rodapé do Blog -->
+    <footer class="mt-20 py-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+        <div class="container mx-auto px-4 md:px-8">
+            <p>&copy; 2025 TechBlog. Todos os direitos reservados.</p>
+            <p>Criado com <a href="https://www.11ty.dev/" class="text-blue-500 hover:underline">Eleventy</a> e inteligência natural e artificial.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

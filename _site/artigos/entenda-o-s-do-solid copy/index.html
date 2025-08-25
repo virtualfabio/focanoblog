@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título dinâmico da página -->
+    <title>Entendendo o &quot;S&quot; do SOLID — Princípio da Responsabilidade Única | Meu Blog de Tecnologia</title>
+    <!-- Link para a fonte Inter do Google Fonts para um visual moderno -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link para o arquivo CSS de estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <style>
+      /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
+      .text-blue-600 { color: var(--color-blue); }
+      .text-red-500 { color: var(--color-red); }
+      .hover\\:text-red-500:hover { color: var(--color-red); }
+    </style>
+
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    
+
+    <!-- Cabeçalho do Blog -->
+    <header class="bg-white shadow-md py-6 mb-12 fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <!-- Título principal do blog com link para a home -->
+            <a href="/" class="text-3xl font-bold text-gray-900 transition-colors duration-200 hover:text-red-500">
+                Tech<span class="text-blue-600">Blog</span>
+            </a>
+            <!-- Links de navegação -->
+            <ul class="flex space-x-8">
+                <li><a href="./index.html" class="nav-link">Página Inicial</a></li>
+                <li><a href="/artigos/" class="nav-link">Artigos</a></li>
+                <li><a href="/contatos/" class="nav-link">Contatos</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Adiciona um espaçador para compensar o cabeçalho fixo -->
+    <div class="pt-[100px]"></div>
+
+    <!-- Layout Principal com Colunas Laterais para Anúncios -->
+    <div class="container mx-auto px-4 md:px-0 lg:grid lg:grid-cols-4 lg:gap-12">
+
+        <!-- Coluna Central com Conteúdo Principal -->
+        <main class="lg:col-span-3">
+          <section class="artigo container mx-auto px-4 md:px-8 mt-2 mb-20">
+            <h1 class="text-3xl font-bold text-gray-900">Entendendo o &quot;S&quot; do SOLID — Princípio da Responsabilidade Única</h1>
+            <p>O <strong>SOLID</strong> é um conjunto de cinco princípios de programação orientada a objetos, criado para ajudar desenvolvedores a escreverem <strong>códigos mais limpos, organizados e fáceis de manter</strong>.</p>
+<p>Hoje, vamos falar apenas do primeiro princípio:</p>
+<h2>🔹 S — Single Responsibility Principle (Princípio da Responsabilidade Única)</h2>
+<p>Esse princípio diz que:</p>
+<blockquote>
+<p><strong>&quot;Uma classe, função ou módulo deve ter apenas uma única razão para mudar.&quot;</strong></p>
+</blockquote>
+<p>Ou seja, <strong>cada parte do código deve ter apenas uma responsabilidade</strong>.<br>
+Se sua função ou classe está fazendo mais de uma coisa, provavelmente está violando o SRP.</p>
+<hr>
+<h2>🚫 Exemplo errado (sem SRP)</h2>
+<p>Imagine que queremos criar um sistema para <strong>gerenciar filmes</strong> de um blog de sugestões e críticas.</p>
+<pre><code class="language-js">class Movie {
+  constructor(title, rating) {
+    this.title = title;
+    this.rating = rating;
+  }
+
+  // Responsabilidade 1: Mostrar informações
+  getInfo() {
+    return `${this.title} - Nota: ${this.rating}`;
+  }
+
+  // Responsabilidade 2: Salvar em banco de dados (simulação)
+  saveToDatabase() {
+    console.log(`Salvando ${this.title} no banco de dados...`);
+  }
+
+  // Responsabilidade 3: Exportar em JSON
+  toJSON() {
+    return JSON.stringify(\{ title: this.title, rating: this.rating \});
+  }
+}
+</code></pre>
+<h3>👉 Problema:</h3>
+<p>A classe Movie faz três coisas diferentes:</p>
+<p>Gerencia dados do filme.</p>
+<p>Faz persistência em banco de dados.</p>
+<p>Exporta em JSON.</p>
+<p>Se amanhã o banco mudar, a classe terá que mudar.<br>
+Se quisermos exportar em XML, a classe também terá que mudar.<br>
+Ou seja, muitas razões para mudar = violação do SRP.</p>
+<h2>✅ Exemplo correto (com SRP)</h2>
+<p>Agora vamos separar cada responsabilidade em sua própria classe/função:</p>
+<pre><code class="language-js">// Classe simples para representar o filme
+class Movie {
+  constructor(title, rating) {
+    this.title = title;
+    this.rating = rating;
+  }
+
+  getInfo() {
+    return `${this.title} - Nota: ${this.rating}`;
+  }
+}
+
+// Classe responsável apenas por salvar dados
+class MovieRepository {
+  save(movie) {
+    console.log(`Salvando ${movie.title} no banco de dados...`);
+  }
+}
+
+// Classe responsável apenas por exportar dados
+class MovieExporter {
+  toJSON(movie) {
+    return JSON.stringify({ title: movie.title, rating: movie.rating });
+  }
+}
+</code></pre>
+<h3>👉 Agora temos responsabilidades separadas:</h3>
+<p>Movie → representa o objeto de domínio (um filme).</p>
+<p>MovieRepository → cuida da persistência em banco.</p>
+<p>MovieExporter → cuida da exportação de dados.</p>
+<h2>🎬 Usando o código</h2>
+<pre><code class="language-js">const movie = new Movie(&quot;Inception&quot;, 9);
+
+// Persistência
+const repo = new MovieRepository();
+repo.save(movie);
+
+// Exportação
+const exporter = new MovieExporter();
+console.log(exporter.toJSON(movie));
+
+// Exibição
+console.log(movie.getInfo());
+</code></pre>
+<h3>Saída esperada:</h3>
+<p>Salvando Inception no banco de dados...<br>
+{&quot;title&quot;:&quot;Inception&quot;,&quot;rating&quot;:9}<br>
+Inception - Nota: 9</p>
+<h2>📌 Vantagens do SRP</h2>
+<p>Código mais fácil de manter.</p>
+<p>Cada parte pode ser testada separadamente.</p>
+<p>Mudanças em uma responsabilidade não afetam as outras.</p>
+<p>Mais flexibilidade para evoluir o sistema.</p>
+<h2>🚀 Conclusão</h2>
+<p>O S do SOLID nos ensina a escrever código mais limpo e modular, separando responsabilidades em pequenas partes coesas.<br>
+No exemplo do blog de filmes, conseguimos dividir dados, persistência e exportação, deixando cada módulo com apenas uma única razão para mudar.</p>
+
+           </section>
+        </main>
+
+        <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
+        <aside class="hidden lg:block">
+            <div class="p-4 bg-gray-100 rounded-lg text-center mb-8">
+                <h3 class="font-bold mb-2">Anúncio</h3>
+                <a href="#" class="block bg-white p-3 rounded-md border border-gray-200 hover:shadow-md transition-shadow">
+                    <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                    <p class="text-sm">Confira esta oferta especial!</p>
+                </a>
+            </div>
+            <!-- Você pode adicionar mais anúncios aqui -->
+        </aside>
+    </div>
+        <!-- Rodapé do Blog -->
+    <footer class="mt-20 py-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+        <div class="container mx-auto px-4 md:px-8">
+            <p>&copy; 2025 TechBlog. Todos os direitos reservados.</p>
+            <p>Criado com <a href="https://www.11ty.dev/" class="text-blue-500 hover:underline">Eleventy</a> e muito <span class="text-red-500">❤️</span></p>
+        </div>
+    </footer>
+
+</body>
+</html>

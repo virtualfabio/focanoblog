@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título dinâmico da página -->
+    <title>Como construir um blog com HTML, Eleventy, JS e IA | Meu Blog de Tecnologia</title>
+    <!-- Link para a fonte Inter do Google Fonts para um visual moderno -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link para o arquivo CSS de estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <style>
+      /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
+      .text-blue-600 { color: var(--color-blue); }
+      .text-red-500 { color: var(--color-red); }
+      .hover\\:text-red-500:hover { color: var(--color-red); }
+    </style>
+
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    
+    <!-- Cabeçalho do Blog -->
+    <header class="bg-white shadow-md py-6 fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <!-- Contêiner do título e da linha degradê -->
+            <div class="flex flex-col items-center">
+                    <!-- Título principal do blog com link para a home -->
+                    <a href="/" class="text-3xl font-bold text-gray-900 transition-colors duration-200 hover:text-red-500">
+                    <span class="flex items-center">
+                        <img src="/public/img/foca2-pqn.png" class="mr-3 animate-hue animate-rotate">
+                        Foca&nbsp;<span class="text-blue-600">no Blog</span>
+                    </span>
+                    </a> 
+                </div>
+
+            <!-- Links de navegação -->
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="/" class="nav-link text-gray-800 hover:text-blue-600"></a></li>
+                <li><a href="/artigos/" class="nav-link text-gray-800 hover:text-blue-600">Artigos</a></li>
+                <li><a href="/contatos/" class="nav-link text-gray-800 hover:text-blue-600">Contatos</a></li>
+            </ul>
+
+            <!-- Menu de hambúrguer para dispositivos móveis -->
+            <div class="md:hidden">
+                <button id="menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu de navegação para dispositivos móveis (oculto por padrão) -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 py-2 mt-4 space-y-2 bg-white">
+            <a href="/" class="block text-gray-800 hover:text-blue-600">Home</a>
+            <a href="/artigos/" class="block text-gray-800 hover:text-blue-600">Artigos</a>
+            <a href="/contatos/" class="block text-gray-800 hover:text-blue-600">Contatos</a>
+        </div>
+    </header>
+
+    <div class="pt-[120px]"></div>
+
+    <!-- Layout Principal com Colunas Laterais para Anúncios -->
+    <div class="container mx-auto px-4 md:px-0 lg:grid lg:grid-cols-4 lg:gap-12">
+
+        <!-- Coluna Central com Conteúdo Principal -->
+        <main class="lg:col-span-3">
+          <div class="pt-[35px]"></div>
+          <section class="artigo container mx-auto px-4 md:px-8 mt-2 mb-20">
+            <h1 class="text-3xl font-bold text-gray-900">Como construir um blog com HTML, Eleventy, JS e IA</h1>
+            <p>Neste artigo vamos aprender a criar um <strong>blog moderno</strong> com:</p>
+<ul>
+<li>HTML simples</li>
+<li>Eleventy (11ty) como gerador estático</li>
+<li>JavaScript filtros e pesquisa dinâmica</li>
+<li>Layout moderno, que você pode gerar com <strong>IA</strong> (por exemplo, usando <a href="https://gemini.google.com/">Gemini</a>)</li>
+</ul>
+<p>Como exemplo, faremos um <strong>blog de sugestões e críticas de filmes</strong>, mas você pode adaptar para qualquer tema.</p>
+<h2>Por que usar Eleventy?</h2>
+<p>Eleventy é um <strong>gerador de sites estáticos</strong> moderno e flexível:</p>
+<ul>
+<li>Simples de configurar e usar</li>
+<li>Suporta Markdown e templates Nunjucks, Liquid, ou outros</li>
+<li>Permite criar coleções de posts, layouts reutilizáveis e páginas de categorias</li>
+<li>Ideal para blogs, portfólios e sites que não precisam de backend complexo</li>
+</ul>
+<h2>Estrutura do projeto</h2>
+<p>meu-blog/<br>
+├── artigos/ # Posts em Markdown<br>
+│ ├── <a href="http://inception.md">inception.md</a><br>
+│ └── <a href="http://matrix.md">matrix.md</a><br>
+├── public/<br>
+│ ├── css/<br>
+│ │ └── style.css<br>
+│ └── js/<br>
+│ └── artigos.js<br>
+├── _includes/<br>
+│ ├── header.html<br>
+│ └── layout.njk<br>
+├── .eleventy.js<br>
+└── index.html</p>
+<hr>
+<h2>Instalação do Eleventy</h2>
+<pre><code class="language-bash"> npm init -y
+ npm install @11ty/eleventy
+ npx eleventy --serve
+</code></pre>
+<h2>Layout moderno (IA / Gemini)</h2>
+<p>Você pode criar <strong>layouts modernos</strong> usando IA, como o <a href="https://gemini.google.com/">Gemini</a>.<br>
+Depois, basta integrar o HTML gerado ao Eleventy, colocando os arquivos dentro de <code>_includes</code> e ajustando o layout Nunjucks.</p>
+<p><strong>Exemplo de layout (_includes/layout.njk):</strong></p>
+<pre>
+&lt;html&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;&#123;&#123; title &#125;&#125;&lt;/title&gt;
+  &lt;link rel="stylesheet" href="/css/style.css"&gt;
+&lt;/head&gt;
+&lt;body class="font-sans bg-gray-50 text-gray-800"&gt;
+    &#123;% include "header.html" %&#125;
+    &lt;main class="max-w-5xl mx-auto p-4 md:p-8"&gt;
+    &#123;&#123; content | safe &#125;&#125;
+    &lt;/main&gt;
+    &lt;script src="/js/artigos.js" defer&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<h2>Header (_includes/header.html)</h2>
+<pre>
+&lt;html&gt;
+&lt;header class="py-6 mb-8 text-center bg-yellow-100 rounded-lg shadow"&gt;
+  &lt;h1 class="text-4xl font-bold"&gt;Blog de Sugestões e Críticas de Filmes&lt;/h1&gt;
+  &lt;nav class="mt-2"&gt;
+    &lt;a href="/" class="mr-4 text-blue-600 hover:underline"&gt;Home&lt;/a&gt;
+    &lt;a href="/categorias/" class="text-blue-600 hover:underline"&gt;Categorias&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+</pre>
+<h2>Exemplo de artigos Markdown</h2>
+<h3>artigos/inception.md</h3>
+<pre>
+---
+title: "Inception - Uma Análise Profunda"
+date: 2025-08-23
+categories: ["Ficção Científica", "Suspense"]
+tags: ["inception", "filme", "crítica"]
+layout: layout.njk
+titleClass: "text-red-600 font-bold"
+---
+
+"Inception" é um filme que explora os limites da mente e dos sonhos.
+
+### Resumo
+
+Dirigido por Christopher Nolan, o filme acompanha Dom Cobb, um especialista em extrair segredos do subconsciente durante os sonhos.
+
+### Pontos fortes
+
+- Enredo complexo e inteligente
+- Atuação impecável do elenco
+- Efeitos visuais impressionantes
+
+### Dicas para assistir
+
+- Preste atenção aos detalhes, eles são importantes para entender a história  
+- Assista mais de uma vez para captar todas as camadas da narrativa
+</pre>
+<p><strong>artigos/matrix.md</strong></p>
+<pre>
+---
+title: "Matrix - Clássico da Ficção Científica"
+date: 2025-08-23
+categories: ["Ficção Científica", "Ação"]
+tags: ["matrix", "filme", "crítica"]
+layout: layout.njk
+titleClass: "text-blue-600 font-bold"
+---
+
+"Matrix" revolucionou o cinema com sua visão futurista e ação inovadora.
+
+### Resumo
+
+O hacker Neo descobre que a realidade é uma simulação controlada por máquinas. Ele se une a Morpheus e Trinity para lutar pela liberdade da humanidade.
+
+### Pontos fortes
+
+- Efeitos especiais inovadores
+- Trama filosófica e intrigante
+- Sequências de ação icônicas
+</pre>
+<h2>Configuração Eleventy (.eleventy.js)</h2>
+<pre>
+const markdownIt = require("markdown-it");
+
+module.exports = function(eleventyConfig) &#123; 
+  eleventyConfig.addPassthroughCopy("public");
+
+  const mdOptions = &#123;  html: true, breaks: true, linkify: true &#125; ;
+  eleventyConfig.setLibrary("md", markdownIt(mdOptions));
+
+  eleventyConfig.addCollection("artigos", function(collectionApi) &#123; 
+    return collectionApi.getFilteredByGlob("./artigos/*.md");
+  &#125; );
+&#125; ;
+</pre>
+<h2>Página inicial com pesquisa e filtros (index.html)</h2>
+<pre>
+---
+layout: layout.njk
+title: "Blog de Sugestões e Críticas de Filmes"
+templateEngineOverride: njk
+---
+
+&lt;div class="flex flex-col gap-4 mb-6 md:flex-row md:items-center md:gap-4"&gt;
+  &lt;div id="filtrosCategorias" class="flex flex-wrap gap-2"&gt;&lt;/div&gt;
+  &lt;input id="pesquisa" type="text" placeholder="Pesquisar..." class="px-2 py-1 border rounded flex-1"&gt;
+&lt;/div&gt;
+
+&lt;div id="lista-artigos" class="grid grid-cols-1 md:grid-cols-2 gap-6"&gt;&lt;/div&gt;
+
+&lt;script\&gt;
+  window.artigos = [
+    &#123; % for post in collections.artigos | reverse %&#125; 
+    &#123; 
+      "title": &#123; &#123;  post.data.title | jsonify &#125; &#125; ,
+      "url": "&#123; &#123;  post.url &#125; &#125; ",
+      "categorias": &#123; &#123;  (post.data.categories or post.data.tags or []) | jsonify &#125; &#125; ,
+      "date": "&#123; &#123;  post.date | date: "%Y-%m-%d" &#125; &#125; "
+    &#125; &#123; % if not loop.last %&#125; ,&#123; % endif %&#125; 
+    &#123; % endfor %&#125; 
+  ];
+&lt;/script\&gt;
+</pre>
+<h2>JavaScript para pesquisa, filtros (public/js/artigos.js)</h2>
+<pre>
+document.addEventListener("DOMContentLoaded", () =&gt; &#123; 
+  const container = document.getElementById("lista-artigos");
+  const filtrosCategorias = document.getElementById("filtrosCategorias");
+  const inputPesquisa = document.getElementById("pesquisa");
+
+  const artigos = Array.isArray(window.artigos) ? window.artigos : [];
+  let listaAtual = artigos.slice();
+
+  function renderArtigos(lista) &#123; 
+    container.innerHTML = "";
+    if(lista.length === 0) &#123; 
+      container.innerHTML = `&lt;p class="text-gray-500"&gt;Nenhum artigo encontrado.&lt;/p&gt;`;
+      return;
+    &#125; 
+    lista.forEach(post =&gt; &#123; 
+      const el = document.createElement("article");
+      el.className = "prose p-4 border rounded shadow bg-white";
+      el.innerHTML = `
+        &lt;a href="$&#123; post.url&#125; " class="font-bold text-blue-600 hover:underline"&gt;$&#123; post.title&#125; &lt;/a&gt;
+        &lt;div class="text-sm text-gray-500"&gt;Categorias: $&#123; post.categorias.join(", ")&#125; &lt;/div&gt;
+        &lt;small&gt;Publicado em $&#123; post.date&#125; &lt;/small&gt;
+      `;
+      container.appendChild(el);
+    &#125; );
+  &#125; 
+
+  const todasCategorias = [...new Set(artigos.flatMap(a =&gt; a.categorias))];
+  todasCategorias.forEach(cat =&gt; &#123; 
+    const label = document.createElement("label");
+    label.className = "flex items-center gap-1";
+    label.innerHTML = `&lt;input type="checkbox" class="filter-category" value="$&#123; cat&#125; "&gt; &lt;span&gt;$&#123; cat&#125; &lt;/span&gt;`;
+    filtrosCategorias.appendChild(label);
+  &#125; );
+
+  function aplicarFiltros() &#123; 
+    const termo = inputPesquisa.value.toLowerCase();
+    const selecionadas = Array.from(filtrosCategorias.querySelectorAll("input:checked"))
+                              .map(cb =&gt; cb.value);
+
+    listaAtual = artigos.filter(post =&gt; &#123; 
+      const matchesSearch = post.title.toLowerCase().includes(termo)
+                          || post.categorias.some(c =&gt; c.toLowerCase().includes(termo));
+
+      const matchesCategory = selecionadas.length === 0
+                              ? true
+                              : post.categorias.some(c =&gt; selecionadas.includes(c));
+
+      return matchesSearch &amp;&amp; matchesCategory;
+    &#125; );
+
+    renderArtigos(listaAtual);
+  &#125; 
+
+  inputPesquisa.addEventListener("input", aplicarFiltros);
+  filtrosCategorias.addEventListener("change", aplicarFiltros);
+
+  renderArtigos(listaAtual);
+&#125; );
+</pre>
+<hr>
+<h2>Conclusão</h2>
+<p>Agora você tem um <strong>blog moderno</strong> com Eleventy, Markdown e JS, focado em <strong>sugestões e críticas de filmes</strong>, com:</p>
+<ul>
+<li>Pesquisa e filtros dinâmicos</li>
+<li>Layoutes modernos que podem ser gerados por IA, como <a href="https://gemini.google.com/">Gemini</a></li>
+</ul>
+<p>Você pode expandir para incluir categorias de filmes, tags de gêneros, ou recomendações baseadas em IA.</p>
+
+           </section>
+        </main>
+
+        <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
+        <aside class="hidden lg:block">
+            <div class="pt-[60px]"></div>
+            <div class="p-4 bg-gray-100 rounded-lg text-center mb-8">
+                <h3 class="font-bold mb-2">Anúncio</h3>
+                <a href="#" class="block bg-white p-3 rounded-md border border-gray-200 hover:shadow-md transition-shadow">
+                    <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                    <p class="text-sm">Confira esta oferta especial!</p>
+                </a>
+            </div>
+
+        </aside>
+    </div>
+
+
+          <!-- Nova Seção para Anúncios (visível em todas as telas) -->
+    <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+        <!-- Grid para exibir os anúncios em colunas, com ajuste responsivo -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Card de Anúncio 1 -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 1" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Clique aqui para um produto incrível!</p>
+            </a>
+            
+            <!-- Card de Anúncio 2 -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+2" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Confira esta oferta especial!</p>
+            </a>
+
+            <!-- Card de Anúncio 3 (para exemplificar) -->
+            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
+                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+3" alt="Anúncio 3" class="w-full mb-2 rounded-sm">
+                <p class="text-xs">Mais um produto para você!</p>
+            </a>
+
+        </div>
+    </section>
+
+
+        <!-- Rodapé do Blog -->
+    <footer class="mt-20 py-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+        <div class="container mx-auto px-4 md:px-8">
+            <p>&copy; 2025 TechBlog. Todos os direitos reservados.</p>
+            <p>Criado com <a href="https://www.11ty.dev/" class="text-blue-500 hover:underline">Eleventy</a> e inteligência natural e artificial.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

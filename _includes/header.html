@@ -1,0 +1,40 @@
+
+    <!-- Cabeçalho do Blog -->
+    <header class="bg-white shadow-md py-6 fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <!-- Contêiner do título e da linha degradê -->
+            <div class="flex flex-col items-center">
+                    <!-- Título principal do blog com link para a home -->
+                    <a href="/" class="text-3xl font-bold text-gray-900 transition-colors duration-200 hover:text-red-500">
+                    <span class="flex items-center">
+                        <img src="/public/img/foca2-pqn.png" class="mr-3 animate-hue animate-rotate">
+                        Foca&nbsp;<span class="text-blue-600">no Blog</span>
+                    </span>
+                    </a> 
+                </div>
+
+            <!-- Links de navegação -->
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="/" class="nav-link text-gray-800 hover:text-blue-600"></a></li>
+                <li><a href="/artigos/" class="nav-link text-gray-800 hover:text-blue-600">Artigos</a></li>
+                <li><a href="/contatos/" class="nav-link text-gray-800 hover:text-blue-600">Contatos</a></li>
+            </ul>
+
+            <!-- Menu de hambúrguer para dispositivos móveis -->
+            <div class="md:hidden">
+                <button id="menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu de navegação para dispositivos móveis (oculto por padrão) -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 py-2 mt-4 space-y-2 bg-white">
+            <a href="/" class="block text-gray-800 hover:text-blue-600">Home</a>
+            <a href="/artigos/" class="block text-gray-800 hover:text-blue-600">Artigos</a>
+            <a href="/contatos/" class="block text-gray-800 hover:text-blue-600">Contatos</a>
+        </div>
+    </header>
+
+    <div class="pt-[120px]"></div>
