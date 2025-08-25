@@ -7,6 +7,8 @@ yarn-error.log*
 firebase-debug.log*
 firebase-debug.*.log*
 
+imagens_foca/
+
 # Firebase cache
 .firebase/
 
