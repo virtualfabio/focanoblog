@@ -22,6 +22,10 @@
 body {
     font-family: 'Inter', sans-serif;
     color: var(--color-gray-dark);
+    background-image: url("../img/foca3-grd-clara.png");
+    background-position: -6% 85%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /* --- Layout e Componentes --- */
