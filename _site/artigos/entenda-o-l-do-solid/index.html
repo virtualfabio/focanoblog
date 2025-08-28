@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Título dinâmico da página -->
     <title>Foca no Blog | Um Blog focado em Tecnologia</title>
 
     <meta name="description" content="Um Blog focado em Tecnologia, com os melhores tutorias, explicações, artigos, exemplos e muito mais da mundo da programação(javascript, java, node, python, ...), nuvem, frameworks, IA, automação e etc..." />
@@ -12,12 +11,13 @@
     <meta name="author" content="Fabio F.S." />
     <meta name="robots" content="index, follow" />
 
+    <!-- Link para a fonte Inter do Google Fonts para um visual moderno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Link para o arquivo CSS de estilos -->
-    <link rel="stylesheet" href="/public/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/public/css/style.css">
     <style>
       /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
       .text-blue-600 { color: var(--color-blue); }
@@ -25,16 +25,15 @@
       .hover\\:text-red-500:hover { color: var(--color-red); }
     </style>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NC5FEWXPYF"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WDEC7PMX5R"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-NC5FEWXPYF');
+    gtag('config', 'G-WDEC7PMX5R');
     </script>
 </head>
-
 <body class="bg-white text-gray-800 antialiased">
 
     
@@ -81,40 +80,82 @@
 
         <!-- Coluna Central com Conteúdo Principal -->
         <main class="lg:col-span-3">
+          <div class="pt-[35px]"></div>
+          <section class="artigo container mx-auto px-4 md:px-8 mt-2 mb-20">
+            <h1 class="text-3xl font-bold text-gray-900">Entendendo o &quot;L&quot; do SOLID&nbsp;<span class="data-artigo"> (criado em 28/08/2025)</span></h1>
+            <p>O <strong>SOLID</strong> é um conjunto de princípios de design de software para ajudar desenvolvedores a criarem sistemas mais flexíveis e fáceis de manter.</p>
+<p>Hoje vamos estudar o terceiro princípio:</p>
+<h2>L — Liskov Substitution Principle (Princípio da Substituição de Liskov)</h2>
+<p>Este princípio afirma que:</p>
+<blockquote>
+<p><strong>&quot;Objetos em um programa devem ser substituíveis por instâncias de seus subtipos, sem alterar a funcionalidade do programa.&quot;</strong><br>
+(<a href="https://pt.wikipedia.org/wiki/SOLID">pt.wikipedia.org</a>, <a href="https://en.wikipedia.org/wiki/SOLID">en.wikipedia.org</a>)</p>
+</blockquote>
+<p>Ou seja:</p>
+<ul>
+<li>Qualquer instância de uma classe derivada (filha) deve poder substituir uma instância da classe base (pai) sem que o comportamento esperado seja alterado.</li>
+<li>Subtipos devem garantir que as funcionalidades se comportem de forma consistente com os tipos base, mantendo contrato e previsibilidade.</li>
+</ul>
+<p>Isso garante coerência, previsibilidade e segurança no uso de herança e polimorfismo.</p>
+<hr>
+<h2>🚫 Exemplo errado (violando LSP)</h2>
+<p>Suponha que temos um sistema que trata documentos que podem ser assinados:</p>
+<pre><code class="language-js">class Documento {
+  assinar() {
+    console.log(&quot;Documento assinado.&quot;);
+  }
+}
 
-            <!-- Seção de Artigos em Destaque -->
-            <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                        <a href="/artigos/como-construir-um-blog/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Como construir um blog com HTML, Eleventy, JS e IA</h3>
-                        <p class="text-gray-600 mb-4">Artigo detalhado sobre construção de um blog do zero...</p>
-                        <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
-                        </a>
-                    
-                        <a href="/artigos/entenda-o-l-do-solid/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Entendendo o "L" do SOLID</h3>
-                        <p class="text-gray-600 mb-4">Entenda de maneira prática e fácil o "Liskov Substitution Principle"...</p>
-                        <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
-                        </a>
-                    
-                </div>
-            </section>
+class DocumentoDigital extends Documento {
+  assinar() {
+    console.log(&quot;Documento digital assinado.&quot;);
+  }
+}
 
-            <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
-                <div class="flex flex-col gap-2 mb-4">
-                    <div class="flex flex-wrap gap-2">
-                    <input id="pesquisa" type="text" placeholder="Pesquisar..." class="text-blue-600 campo px-2 py-1 border rounded flex-1">
-                    </div>
+class Video extends Documento {
+  // Erroneamente extendemos Documento, mas vídeo não pode ser assinado.
+}
+</code></pre>
+<p>Se Video estende Documento, mas não possui o método assinar() corretamente ou lança um erro, estamos violando o princípio de Liskov.<br>
+Isso porque um Video não pode substituir um Documento sem quebrar o comportamento esperado do cliente que tenta invocar assinar().</p>
+<h3>Por que isso acontece?</h3>
+<p>Geralmente, violações ocorrem por abstrações mal feitas — colocar responsabilidades em hierarquias de classes sem refletir o comportamento real.</p>
+<p>No exemplo acima, expandimos a hierarquia de herança pela semelhança conceitual (um vídeo é um tipo de &quot;documento&quot;), mas isso não reflete as capacidades reais dos objetos.</p>
+<h2>✅ Exemplo correto (respeitando LSP)</h2>
+<p>Em vez de usar herança incorreta, podemos separar comportamentos:</p>
+<pre><code class="language-js">class Documento { /* sem método assinar */ }
 
-                    <div id="filtrosCategorias" class="flex flex-wrap gap-4 mt-2"></div>
-                </div>
-                <main id="lista-artigos" class="container mx-auto px-4 md:px-8">
-                    <div id="artigos-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    </div>
-                </main>
-            </section>
+class DocumentoAssinavel extends Documento {
+  assinar() {
+    console.log(&quot;Documento assinado.&quot;);
+  }
+}
+
+class DocumentoDigital extends DocumentoAssinavel {
+  assinar() {
+    console.log(&quot;Documento digital assinado.&quot;);
+  }
+}
+
+class Video extends Documento {
+  // Aqui, Video não implementa assinar — sem problema.
+}
+</code></pre>
+<p>Agora, qualquer cliente que espere chamar assinar() só deve receber objetos do tipo DocumentoAssinavel, garantindo que o comportamento seja preservado.</p>
+<h2>Por que obedecer ao LSP é importante?</h2>
+<ul>
+<li>Previsibilidade: permite que subclasses se comportem de forma consistente com a classe base.</li>
+<li>Polimorfismo seguro: possibilita usar subclasses onde forem esperadas classes base, sem surpresas no comportamento.</li>
+<li>Manutenção facilitada: evita bugs silenciosos ao evoluir a hierarquia de classes.</li>
+</ul>
+<h2>Conclusão</h2>
+<p>O “L” em SOLID — o Princípio da Substituição de Liskov — garante que subtipos possam substituir seus tipos base sem alterar o funcionamento do programa.<br>
+Sua violação geralmente indica problemas de abstração ou hierarquia mal modelada.</p>
+<p>Aplicar o LSP corretamente torna o código mais robusto, legível e aderente ao paradigma de programação orientada a objetos.</p>
+<p>Para aprender ainda mais sobre SOLID, explore os outros artigos aqui o blob sobre os outros princípios e veja como todos se complementam.</p>
+<p><img src="../../public/img/diagrama-classes-solid-l.png" alt="Diagrama de Classes" title="Diagrama de Classes"></p>
+
+           </section>
         </main>
 
         <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
@@ -125,14 +166,14 @@
                 <h4 class="font-bold mb-2">Anúncio</h4>
                 <div id ="anuncios_lateral">
                 </div>
-            </div>
+            </div>    
         </aside>
 
     </div>
 
-    <!-- Seção para Anúncios (visível em todas as telas) -->
+
     <section class="container mx-auto px-4 md:px-8 mt-10 mb-10">
-        <div id ="anuncios_rodape" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div id="anuncios_rodape" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         </div>
     </section>
 
@@ -145,39 +186,6 @@
     </footer>
 
     <script>
-        // Gera o array de artigos já no build
-        window.artigos = [
-            
-            {
-            "title": "Como construir um blog com HTML, Eleventy, JS e IA",
-            "url": "/artigos/como-construir-um-blog/",
-            "categorias": ["html","js","eleventy","markdown"],
-            "date": "24/08/2025"
-            },
-            
-            {
-            "title": "Entendendo o \"O\" do SOLID",
-            "url": "/artigos/entenda-o-o-do-solid/",
-            "categorias": ["js","solid"],
-            "date": "25/08/2025"
-            },
-            
-            {
-            "title": "Entendendo o \"S\" do SOLID",
-            "url": "/artigos/entenda-o-s-do-solid/",
-            "categorias": ["js","solid"],
-            "date": "25/08/2025"
-            },
-            
-            {
-            "title": "Entendendo o \"L\" do SOLID",
-            "url": "/artigos/entenda-o-l-do-solid/",
-            "categorias": ["js","solid"],
-            "date": "27/08/2025"
-            },
-            
-        ];
-
         document.addEventListener('DOMContentLoaded', () => {
             const menuButton = document.getElementById('menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -186,9 +194,12 @@
                 mobileMenu.classList.toggle('hidden');
             });
         });
+
+        //const dataOriginal = "Wed Aug 27 2025 21:00:00 GMT-0300 (Horário Padrão de Brasília)";
+        //const data = parse(dataOriginal, "yyyy-MM-dd", new Date());
+        //const dataFormatada = format(data, "dd/MM/yyyy");
+        //document.getElementById("data").innerText = ` (criado em ${dataFormatada})`;
     </script>
-    <script defer src="/public/js/artigos.js"></script>
     <script defer src="/public/js/anuncios.js"></script>
 </body>
-
 </html>

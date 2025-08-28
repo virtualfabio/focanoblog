@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Link para o arquivo CSS de estilos -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="/public/css/style.css">
     <style>
       /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
       .text-blue-600 { color: var(--color-blue); }
@@ -45,7 +45,7 @@
                     <!-- Título principal do blog com link para a home -->
                     <a href="/" class="text-3xl font-bold text-gray-900 transition-colors duration-200 hover:text-red-500">
                     <span class="flex items-center">
-                        <img src="/public/img/foca2-pqn.png" class="mr-3 animate-hue animate-rotate">
+                        <img src="/public/img/foca2-pqn.png" alt="logo - Foca de óculos" class="mr-3 animate-hue animate-rotate">
                         Foca&nbsp;<span class="text-blue-600">no Blog</span>
                     </span>
                     </a> 
@@ -53,9 +53,8 @@
 
             <!-- Links de navegação -->
             <ul class="hidden md:flex space-x-8">
-                <li><a href="/" class="nav-link text-gray-800 hover:text-blue-600"></a></li>
-                <li><a href="/artigos/" class="nav-link text-gray-800 hover:text-blue-600">Artigos</a></li>
-                <li><a href="/contatos/" class="nav-link text-gray-800 hover:text-blue-600">Contatos</a></li>
+                <li><a href="/" class="nav-link text-gray-800 hover:text-blue-600">Home</a></li>
+                <li><a href="/links/index.html" class="nav-link text-gray-800 hover:text-blue-600">Links</a></li>
             </ul>
 
             <!-- Menu de hambúrguer para dispositivos móveis -->
@@ -70,8 +69,7 @@
         <!-- Menu de navegação para dispositivos móveis (oculto por padrão) -->
         <div id="mobile-menu" class="hidden md:hidden px-4 py-2 mt-4 space-y-2 bg-white">
             <a href="/" class="block text-gray-800 hover:text-blue-600">Home</a>
-            <a href="/artigos/" class="block text-gray-800 hover:text-blue-600">Artigos</a>
-            <a href="/contatos/" class="block text-gray-800 hover:text-blue-600">Contatos</a>
+            <a href="/links/index.html" class="block text-gray-800 hover:text-blue-600">Links</a>
         </div>
     </header>
 
@@ -84,7 +82,7 @@
         <main class="lg:col-span-3">
           <div class="pt-[35px]"></div>
           <section class="artigo container mx-auto px-4 md:px-8 mt-2 mb-20">
-            <h1 class="text-3xl font-bold text-gray-900">Como construir um blog com HTML, Eleventy, JS e IA</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Como construir um blog com HTML, Eleventy, JS e IA&nbsp;<span class="data-artigo"> (criado em 25/08/2025)</span></h1>
             <p>Neste artigo vamos aprender a criar um <strong>blog moderno</strong> com:</p>
 <ul>
 <li>HTML simples</li>
@@ -326,52 +324,27 @@ document.addEventListener("DOMContentLoaded", () =&gt; &#123;
         <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
         <aside class="hidden lg:block">
             <div class="pt-[60px]"></div>
-            <div class="p-4 bg-gray-100 rounded-lg text-center mb-8">
-                <h3 class="font-bold mb-2">Anúncio</h3>
-                <a href="#" class="block bg-white p-3 rounded-md border border-gray-200 hover:shadow-md transition-shadow">
-                    <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
-                    <p class="text-sm">Confira esta oferta especial!</p>
-                </a>
-            </div>
 
+            <div class="p-4 bg-gray-100 rounded-lg text-center mb-4">
+                <h4 class="font-bold mb-2">Anúncio</h4>
+                <div id ="anuncios_lateral">
+                </div>
+            </div>    
         </aside>
+
     </div>
 
 
-          <!-- Nova Seção para Anúncios (visível em todas as telas) -->
-    <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
-        <!-- Grid para exibir os anúncios em colunas, com ajuste responsivo -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Card de Anúncio 1 -->
-            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
-                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
-                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 1" class="w-full mb-2 rounded-sm">
-                <p class="text-xs">Clique aqui para um produto incrível!</p>
-            </a>
-            
-            <!-- Card de Anúncio 2 -->
-            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
-                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
-                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+2" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
-                <p class="text-xs">Confira esta oferta especial!</p>
-            </a>
-
-            <!-- Card de Anúncio 3 (para exemplificar) -->
-            <a href="#" class="block bg-gray-100 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
-                <h4 class="font-bold text-sm mb-2">Anúncio</h4>
-                <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+3" alt="Anúncio 3" class="w-full mb-2 rounded-sm">
-                <p class="text-xs">Mais um produto para você!</p>
-            </a>
-
+    <section class="container mx-auto px-4 md:px-8 mt-10 mb-10">
+        <div id="anuncios_rodape" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         </div>
     </section>
 
-
         <!-- Rodapé do Blog -->
     <footer class="mt-20 py-8 border-t border-gray-200 text-center text-gray-500 text-sm">
-        <div class="container mx-auto px-4 md:px-8">
-            <p>&copy; 2025 TechBlog. Todos os direitos reservados.</p>
-            <p>Criado com <a href="https://www.11ty.dev/" class="text-blue-500 hover:underline">Eleventy</a> e inteligência natural e artificial.</p>
+        <div class="container mx-auto px-4 md:px-8 pb-10">
+            <p><strong>&copy; 2025 Foca no Blog</strong>. Todos os direitos reservados.</p>
+            <p>Criado com html, css, js, markdown, <a href="https://www.11ty.dev/" class="text-blue-500 hover:underline">Eleventy</a>,  inteligência natural e artificial.</p>
         </div>
     </footer>
 
@@ -384,6 +357,12 @@ document.addEventListener("DOMContentLoaded", () =&gt; &#123;
                 mobileMenu.classList.toggle('hidden');
             });
         });
+
+        //const dataOriginal = "Sun Aug 24 2025 21:00:00 GMT-0300 (Horário Padrão de Brasília)";
+        //const data = parse(dataOriginal, "yyyy-MM-dd", new Date());
+        //const dataFormatada = format(data, "dd/MM/yyyy");
+        //document.getElementById("data").innerText = ` (criado em ${dataFormatada})`;
     </script>
+    <script defer src="/public/js/anuncios.js"></script>
 </body>
 </html>

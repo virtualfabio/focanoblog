@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lista.forEach(post => {
         const el = document.createElement("article");
-        el.className = "prose prose-lg p-2 border rounded bg-white";
+        el.className = "prose prose-lg p-2 border rounded bg-white hover:border-blue-500";
         el.innerHTML = `
         <a href="${post.url}" class="font-bold text-blue-600 hover:underline">
             ${post.title}
@@ -50,18 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // inicial
-  setInterval(renderArtigos(listaAtual), 900);
+  setInterval(renderArtigos(listaAtual), 1200);
 
-  // ordenação
-  //document.getElementById("ordenarData").addEventListener("click", () => {
-  //  listaAtual = [...listaAtual].sort((a, b) => new Date(b.date) - new Date(a.date));
-  //  renderArtigos(listaAtual);
-  //});
-//
-  //document.getElementById("ordenarTitulo").addEventListener("click", () => {
-  //  listaAtual = [...listaAtual].sort((a, b) => a.title.localeCompare(b.title));
-  //  renderArtigos(listaAtual);
-  //});
 
   // 🔹 cria checkboxes dinamicamente
   const todasCategorias = [...new Set(window.artigos.flatMap(p => p.categorias))];

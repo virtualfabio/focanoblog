@@ -82,39 +82,19 @@
         <!-- Coluna Central com Conteúdo Principal -->
         <main class="lg:col-span-3">
 
-            <!-- Seção de Artigos em Destaque -->
             <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                        <a href="/artigos/como-construir-um-blog/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Como construir um blog com HTML, Eleventy, JS e IA</h3>
-                        <p class="text-gray-600 mb-4">Artigo detalhado sobre construção de um blog do zero...</p>
-                        <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
-                        </a>
-                    
-                        <a href="/artigos/entenda-o-l-do-solid/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Entendendo o "L" do SOLID</h3>
-                        <p class="text-gray-600 mb-4">Entenda de maneira prática e fácil o "Liskov Substitution Principle"...</p>
-                        <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
-                        </a>
-                    
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-left">Links</h2>
+                <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Canal (Youtube)</h3>
+                        <p class="text-gray-600 mb-4"><a href="https://www.youtube.com/@ArquitetandoSolu%C3%A7%C3%B5es" class="hover:underline">@ArquitetandoSoluções</a></p>
                 </div>
+                <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Site (Padrões de Projeto)</h3>
+                        <p class="text-gray-600 mb-4"><a href="https://refactoring.guru/pt-br/design-patterns" class="hover:underline">Refactoring.guru</a></p>
+                </div>
+                
             </section>
 
-            <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
-                <div class="flex flex-col gap-2 mb-4">
-                    <div class="flex flex-wrap gap-2">
-                    <input id="pesquisa" type="text" placeholder="Pesquisar..." class="text-blue-600 campo px-2 py-1 border rounded flex-1">
-                    </div>
-
-                    <div id="filtrosCategorias" class="flex flex-wrap gap-4 mt-2"></div>
-                </div>
-                <main id="lista-artigos" class="container mx-auto px-4 md:px-8">
-                    <div id="artigos-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    </div>
-                </main>
-            </section>
         </main>
 
         <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
@@ -130,9 +110,8 @@
 
     </div>
 
-    <!-- Seção para Anúncios (visível em todas as telas) -->
-    <section class="container mx-auto px-4 md:px-8 mt-10 mb-10">
-        <div id ="anuncios_rodape" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
+        <div id="anuncios_rodape" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         </div>
     </section>
 
@@ -144,50 +123,6 @@
         </div>
     </footer>
 
-    <script>
-        // Gera o array de artigos já no build
-        window.artigos = [
-            
-            {
-            "title": "Como construir um blog com HTML, Eleventy, JS e IA",
-            "url": "/artigos/como-construir-um-blog/",
-            "categorias": ["html","js","eleventy","markdown"],
-            "date": "24/08/2025"
-            },
-            
-            {
-            "title": "Entendendo o \"O\" do SOLID",
-            "url": "/artigos/entenda-o-o-do-solid/",
-            "categorias": ["js","solid"],
-            "date": "25/08/2025"
-            },
-            
-            {
-            "title": "Entendendo o \"S\" do SOLID",
-            "url": "/artigos/entenda-o-s-do-solid/",
-            "categorias": ["js","solid"],
-            "date": "25/08/2025"
-            },
-            
-            {
-            "title": "Entendendo o \"L\" do SOLID",
-            "url": "/artigos/entenda-o-l-do-solid/",
-            "categorias": ["js","solid"],
-            "date": "27/08/2025"
-            },
-            
-        ];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        });
-    </script>
-    <script defer src="/public/js/artigos.js"></script>
     <script defer src="/public/js/anuncios.js"></script>
 </body>
 

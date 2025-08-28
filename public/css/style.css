@@ -1,16 +1,4 @@
-/*
-  Este arquivo contém os estilos CSS para o layout do blog.
-  Ele foi criado para funcionar em conjunto com o Tailwind CSS,
-  e pode ser estendido para personalizar ainda mais o visual.
-*/
 
-/*
-  As classes utilitárias do Tailwind CSS (como bg-gray-50, text-gray-800,
-  flex, etc.) já fornecem a maior parte do estilo. Este arquivo
-  é ideal para regras de estilo mais específicas ou para o conteúdo gerado.
-*/
-
-/* --- Cores e Tipografia --- */
 :root {
   --color-blue: #14539E;
   --color-dark-blue: #0d3567;
@@ -42,6 +30,7 @@ body {
 .nav-link:hover {
     color: var(--color-blue);
     transform: translateY(-2px);
+      text-decoration: underline;
 }
 
 .nav-link.active {
@@ -71,7 +60,7 @@ body {
 }
 
 .prose a:hover {
-    color: var(--color-red);
+    color: var(--color-gray-dark);
     text-decoration: underline;
 }
 
@@ -104,6 +93,13 @@ body {
     list-style-type: disc;
     list-style-position: inside;
     margin-bottom: 10px;
+}
+
+.artigo>ul>li>ul{
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-bottom: 10px;
+    margin-left: 21px;
 }
 
 .artigo>h1{
@@ -168,4 +164,19 @@ pre{
 /* Aplica a animação de rotação à imagem */
 .animate-rotate {
   animation: rotate-img 7s ease-in-out infinite;
+}
+
+.data-artigo{
+    font-size: 50%;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.titulo-anuncio{
+    font-weight: 600;
+    display: block;
+}
+.descricao-anuncio{
+    font-weight: 400;
+
 }

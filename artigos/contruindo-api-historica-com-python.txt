@@ -1,0 +1,354 @@
+---
+layout: layout.njk
+title: Construindo uma API "Histórica" com Python e FastAPI
+description: Passo a passo da contrução de uma API Rest em python com arquitetura hexagonal
+date: 2025-08-27
+categorias: ["python", "arquitetura_hexagonal"]
+destaque: true
+---
+
+Neste artigo vamos criar uma API de consulta a dados historicos da **_Independência do Brasil_** utilizando _Python, FastAPI e com Arquitetura Hexagonal_.
+
+### Estrutura da Arquitetura e Tecnologias
+
+A Arquitetura Hexagonal nos permite desacoplar a lógica de negócio do banco de dados, da interface do usuário e de outras dependências externas. A API será o "adaptador" que se comunicará com o "núcleo" da aplicação.
+- **Domínio (Core)**: O coração da aplicação. Aqui reside toda a lógica de negócio.
+  - **Entidades**: Classes que representam os dados, como _PersonagemHistorico_ e _EventoHistorico_.
+  - **Use Cases (Casos de Uso)**: Onde a lógica de negócio é implementada. Por exemplo, _ConsultarPersonagens_ ou _ConsultarEventosPorAno_. Os use cases orquestram a comunicação entre as entidades e os adaptadores.
+
+
+### Tecnologias Principais
+- **Python 3.10+**: A linguagem de programação.
+- **FastAPI**: Um framework moderno e de alta performance para construir APIs. Oferece validação de dados automática, documentação interativa (Swagger UI) e é baseado em type hints do Python.
+- **Pydantic**: Para a validação e serialização de dados.
+- **SQLAlchemy**: Uma biblioteca de ORM (Object-Relational Mapper) que facilita a interação com o banco de dados.
+
+### Endpoints da API REST
+Aqui estão as rotas que podemos criar para a sua API:
+
+- GET /personagens: Retorna a lista de todos os personagens históricos.
+- GET /personagens/{id}: Retorna os detalhes de um personagem específico.
+- GET /eventos/ano/{ano}: Retorna a lista de eventos históricos que ocorreram no ano especificado (de 1808 a 1822).
+
+### Exemplo de Estrutura de Diretórios
+.
+├── src/
+│   ├── api/                 # Adaptador de entrada (FastAPI)
+│   │   ├── main.py          # Ponto de entrada da API
+│   │   ├── routers/         # Módulos de rotas
+│   │   │   ├── eventos.py
+│   │   │   └── personagens.py
+│   │   └── schemas/         # Modelos de dados para validação (Pydantic)
+│   │       ├── eventos.py
+│   │       └── personagens.py
+│   ├── core/                # Domínio (lógica de negócio)
+│   │   ├── entities/        # Entidades
+│   │   │   ├── eventos.py
+│   │   │   └── personagens.py
+│   │   ├── use_cases/       # Casos de uso
+│   │   │   └── consultar_dados_historicos.py
+│   │   └── ports/           # Interfaces (Portas)
+│   │       └── repositorio_historico.py
+│   ├── infra/               # Adaptador de saída (Banco de dados)
+│   │   ├── database.py      # Configuração do banco
+│   │   └── repositories/    # Implementações das portas
+│   │       └── repositorio_historico_db.py
+│   └── tests/
+├── pyproject.toml
+└── README.md
+
+
+
+# main.py
+# Este é o ponto de entrada da nossa aplicação FastAPI.
+# Ele faz a injeção de dependência e inicializa os routers.
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from src.api.routers import eventos, personagens
+from src.core.use_cases.consultar_dados_historicos import ConsultarDadosHistoricos
+from src.infra.repositories.repositorio_historico_db import RepositorioHistoricoDB
+
+# Inicializa o repositório e o caso de uso.
+# Isso demonstra o princípio de Injeção de Dependência.
+repositorio = RepositorioHistoricoDB()
+consultor_historico = ConsultarDadosHistoricos(repositorio=repositorio)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Função de ciclo de vida da aplicação.
+    Pode ser usada para inicializar conexões de banco de dados,
+    carregar dados, etc.
+    """
+    print("Iniciando a API...")
+    yield
+    print("Desligando a API...")
+
+app = FastAPI(
+    title="API de História do Brasil",
+    description="Uma API REST para consulta de personagens e eventos históricos do Brasil, com foco no período de 1808 a 1822.",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# Adiciona os routers à aplicação, passando o caso de uso como dependência.
+app.include_router(eventos.router, dependencies=[fastapi.Depends(lambda: consultor_historico)])
+app.include_router(personagens.router, dependencies=[fastapi.Depends(lambda: consultor_historico)])
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+# src/core/entities/personagens.py
+# A entidade de domínio, representando a estrutura de dados.
+import dataclasses
+
+@dataclasses.dataclass
+class PersonagemHistorico:
+    """Entidade de domínio para Personagens Históricos."""
+    id: int
+    nome: str
+    descricao: str
+    biografia_resumida: str
+
+
+# src/core/entities/eventos.py
+# A entidade de domínio, representando a estrutura de dados.
+import dataclasses
+from typing import List
+
+@dataclasses.dataclass
+class EventoHistorico:
+    """Entidade de domínio para Eventos Históricos."""
+    id: int
+    ano: int
+    titulo: str
+    descricao: str
+    personagens_envolvidos_ids: List[int]
+
+
+# src/core/ports/repositorio_historico.py
+# A porta de saída (interface) que define o contrato.
+from abc import ABC, abstractmethod
+from typing import List, Optional
+from src.core.entities.personagens import PersonagemHistorico
+from src.core.entities.eventos import EventoHistorico
+
+class RepositorioHistorico(ABC):
+    """Porta de saída (Driven Port) para persistência de dados históricos."""
+
+    @abstractmethod
+    def get_personagens(self) -> List[PersonagemHistorico]:
+        """Retorna todos os personagens históricos."""
+        pass
+
+    @abstractmethod
+    def get_personagem_by_id(self, personagem_id: int) -> Optional[PersonagemHistorico]:
+        """Retorna um personagem por ID."""
+        pass
+
+    @abstractmethod
+    def get_eventos_by_ano(self, ano: int) -> List[EventoHistorico]:
+        """Retorna todos os eventos de um ano específico."""
+        pass
+
+
+# src/core/use_cases/consultar_dados_historicos.py
+# O caso de uso, onde a lógica de negócio é implementada.
+from src.core.ports.repositorio_historico import RepositorioHistorico
+from src.core.entities.personagens import PersonagemHistorico
+from src.core.entities.eventos import EventoHistorico
+from typing import List, Optional
+
+class ConsultarDadosHistoricos:
+    """Caso de Uso (Use Case) para consultar dados históricos."""
+
+    def __init__(self, repositorio: RepositorioHistorico):
+        """
+        Injeta a dependência do repositório, seguindo o princípio da Inversão de Dependência (SOLID).
+        """
+        self.repositorio = repositorio
+
+    def get_todos_os_personagens(self) -> List[PersonagemHistorico]:
+        """Executa a lógica para obter todos os personagens."""
+        return self.repositorio.get_personagens()
+
+    def get_personagem_por_id(self, personagem_id: int) -> Optional[PersonagemHistorico]:
+        """Executa a lógica para obter um personagem por ID."""
+        return self.repositorio.get_personagem_by_id(personagem_id)
+
+    def get_eventos_por_ano(self, ano: int) -> List[EventoHistorico]:
+        """
+        Executa a lógica para obter eventos por ano.
+        A regra de negócio de restrição de ano reside aqui.
+        """
+        if not (1808 <= ano <= 1822):
+            return []
+        return self.repositorio.get_eventos_by_ano(ano)
+
+
+# src/infra/repositories/repositorio_historico_db.py
+# A implementação do repositório (adaptador), usando um banco de dados em memória.
+from src.core.ports.repositorio_historico import RepositorioHistorico
+from src.core.entities.personagens import PersonagemHistorico
+from src.core.entities.eventos import EventoHistorico
+from typing import List, Optional
+
+class RepositorioHistoricoDB(RepositorioHistorico):
+    """
+    Implementação da porta de saída, agindo como um banco de dados em memória.
+    Em um cenário real, esta classe interagiria com SQLAlchemy, SQL, etc.
+    """
+    
+    def __init__(self):
+        # Dados de exemplo para simular o banco de dados.
+        self._personagens = {
+            1: PersonagemHistorico(
+                id=1,
+                nome="Dom João VI",
+                descricao="Rei do Reino Unido de Portugal, Brasil e Algarves.",
+                biografia_resumida="Chegou ao Brasil em 1808 e elevou a colônia a Reino Unido."
+            ),
+            2: PersonagemHistorico(
+                id=2,
+                nome="Dom Pedro I",
+                descricao="Primeiro Imperador do Brasil.",
+                biografia_resumida="Proclamou a Independência do Brasil em 1822."
+            )
+        }
+        self._eventos = {
+            1808: [
+                EventoHistorico(
+                    id=1,
+                    ano=1808,
+                    titulo="Chegada da Família Real Portuguesa ao Brasil",
+                    descricao="Fuga da família real de Lisboa para o Rio de Janeiro por causa da invasão napoleônica.",
+                    personagens_envolvidos_ids=[1]
+                ),
+            ],
+            1822: [
+                EventoHistorico(
+                    id=2,
+                    ano=1822,
+                    titulo="Independência do Brasil",
+                    descricao="A Proclamação da Independência foi um dos eventos mais importantes da história do Brasil.",
+                    personagens_envolvidos_ids=[2]
+                )
+            ]
+        }
+
+    def get_personagens(self) -> List[PersonagemHistorico]:
+        return list(self._personagens.values())
+
+    def get_personagem_by_id(self, personagem_id: int) -> Optional[PersonagemHistorico]:
+        return self._personagens.get(personagem_id)
+
+    def get_eventos_by_ano(self, ano: int) -> List[EventoHistorico]:
+        return self._eventos.get(ano, [])
+
+
+# src/api/schemas/personagens.py
+# Modelo Pydantic para a validação de dados de entrada/saída.
+from pydantic import BaseModel
+
+class PersonagemSchema(BaseModel):
+    id: int
+    nome: str
+    descricao: str
+    biografia_resumida: str
+
+    class Config:
+        orm_mode = True
+
+
+# src/api/schemas/eventos.py
+# Modelo Pydantic para a validação de dados de entrada/saída.
+from pydantic import BaseModel
+from typing import List
+
+class EventoSchema(BaseModel):
+    id: int
+    ano: int
+    titulo: str
+    descricao: str
+    personagens_envolvidos_ids: List[int]
+
+    class Config:
+        orm_mode = True
+
+
+# src/api/routers/personagens.py
+# Router do FastAPI para os endpoints de personagens.
+from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+from src.core.use_cases.consultar_dados_historicos import ConsultarDadosHistoricos
+from src.api.schemas.personagens import PersonagemSchema
+
+router = APIRouter(
+    prefix="/personagens",
+    tags=["personagens"]
+)
+
+@router.get("/", response_model=List[PersonagemSchema])
+def get_all_personagens(
+    consultor: ConsultarDadosHistoricos = Depends()
+):
+    """
+    Obtém a lista de todos os personagens históricos.
+    """
+    personagens = consultor.get_todos_os_personagens()
+    return personagens
+
+@router.get("/{personagem_id}", response_model=PersonagemSchema)
+def get_personagem(
+    personagem_id: int,
+    consultor: ConsultarDadosHistoricos = Depends()
+):
+    """
+    Obtém os detalhes de um personagem específico pelo ID.
+    """
+    personagem = consultor.get_personagem_por_id(personagem_id)
+    if not personagem:
+        raise HTTPException(status_code=404, detail="Personagem não encontrado.")
+    return personagem
+
+
+# src/api/routers/eventos.py
+# Router do FastAPI para os endpoints de eventos.
+from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+from src.core.use_cases.consultar_dados_historicos import ConsultarDadosHistoricos
+from src.api.schemas.eventos import EventoSchema
+
+router = APIRouter(
+    prefix="/eventos",
+    tags=["eventos"]
+)
+
+@router.get("/ano/{ano}", response_model=List[EventoSchema])
+def get_eventos_por_ano(
+    ano: int,
+    consultor: ConsultarDadosHistoricos = Depends()
+):
+    """
+    Obtém todos os eventos que aconteceram em um ano específico.
+    """
+    eventos = consultor.get_eventos_por_ano(ano)
+    return eventos
+
+
+
+
+---------------
+Este código é um sistema funcional e completo. Para rodar, você precisará ter o FastAPI e o Uvicorn instalados.
+
+Instale as bibliotecas:
+
+Bash
+pip install "fastapi[all]" uvicorn
+Execute o arquivo principal:
+
+Bash
+uvicorn main:app --reload
+Depois, você pode acessar a documentação da API em http://127.0.0.1:8000/docs para testar os endpoints interativamente.

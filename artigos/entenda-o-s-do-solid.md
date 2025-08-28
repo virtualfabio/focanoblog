@@ -1,10 +1,10 @@
 ---
 layout: layout.njk
 title: Entendendo o "S" do SOLID
-description: Entenda de maneira prática e fácil o "Single Responsibility Principle"...
+description: Entenda de maneira prática e fácil o "Single Responsibility Principle"
 date: 2025-08-26
 categorias: ["js", "solid"]
-destaque: true
+destaque: false
 ---
 
 

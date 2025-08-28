@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Link para o arquivo CSS de estilos -->
-    <link rel="stylesheet" href="./public/css/style.css">
+    <link rel="stylesheet" href="/public/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
@@ -25,13 +25,13 @@
       .hover\\:text-red-500:hover { color: var(--color-red); }
     </style>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WDEC7PMX5R"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NC5FEWXPYF"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-WDEC7PMX5R');
+    gtag('config', 'G-NC5FEWXPYF');
     </script>
 </head>
 
@@ -77,19 +77,21 @@
         <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
         <aside class="hidden lg:block">
             <div class="pt-[60px]"></div>
-            <div class="p-4 bg-gray-100 rounded-lg text-center mb-8">
+
+            <div class="p-4 bg-gray-100 rounded-lg text-center mb-4">
                 <h4 class="font-bold mb-2">Anúncio</h4>
-                <a href="#" class="block bg-white p-4 rounded-md shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                    <img src="https://placehold.co/120x120/cccccc/333333?text=An%C3%BAncio+1" alt="Anúncio 2" class="w-full mb-2 rounded-sm">
-                    <p class="text-sm">Confira esta oferta especial!</p>
-                </a>
+                <div id ="anuncios_lateral">
+                </div>
             </div>
-            <!-- Você pode adicionar mais anúncios aqui -->
         </aside>
+
     </div>
 
-
-    {% include "anuncios.html" %}
+    <!-- Seção para Anúncios (visível em todas as telas) -->
+    <section class="container mx-auto px-4 md:px-8 mt-10 mb-10">
+        <div id ="anuncios_rodape" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        </div>
+    </section>
 
     {% include "footer.html" %}
 
@@ -115,7 +117,8 @@
             });
         });
     </script>
-    <script defer src="./public/js/artigos.js"></script>
+    <script defer src="/public/js/artigos.js"></script>
+    <script defer src="/public/js/anuncios.js"></script>
 </body>
 
 </html>

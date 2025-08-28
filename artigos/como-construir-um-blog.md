@@ -1,7 +1,7 @@
 ---
 layout: layout.njk
 title: Como construir um blog com HTML, Eleventy, JS e IA
-description: Este é um artigo detalhado sobre 1
+description: Artigo detalhado sobre construção de um blog do zero
 date: 2025-08-25
 categorias: ["html", "js", "eleventy", "markdown"]
 destaque: true
