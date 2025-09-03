@@ -1,10 +1,10 @@
 ---
 layout: layout.njk
-title: Entendendo o "L" do SOLID
+title: Princípios SOLID - Entenda o "L" do SOLID
 description: Entenda de maneira prática e fácil o "Liskov Substitution Principle"
 date: 2025-08-28
 categorias: ["js", "solid"]
-destaque: true
+destaque: false
 ---
 
 

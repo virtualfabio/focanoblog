@@ -7,17 +7,16 @@
     <!-- Título dinâmico da página -->
     <title>Foca no Blog | Um Blog focado em Tecnologia</title>
 
-    <meta name="description" content="Um Blog focado em Tecnologia, com os melhores tutorias, explicações, artigos, exemplos e muito mais da mundo da programação(javascript, java, node, python, ...), nuvem, frameworks, IA, automação e etc..." />
-    <meta name="keywords" content="programadores, programacao, exemplos, tutoriais, artigos, web, java, python, javascript, js, html, css, ux, scrum, kanban, dicas, melhores notebooks, notebook custo-benefício, comparativos de tecnologicas, nuvem, cloud, aws, azure, gcp" />
+    <meta name="description" content="Domine o mundo da tecnologia! No Foca no Blog, você encontra tutoriais práticos, artigos aprofundados e exemplos de código sobre programação (JavaScript, Python, Java), nuvem, IA e automação. Clique e evolua sua carreira!" />
     <meta name="author" content="Fabio F.S." />
     <meta name="robots" content="index, follow" />
-
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Link para o arquivo CSS de estilos -->
+
     <link rel="stylesheet" href="/public/css/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" onload="this.media='all'"></script>
     <style>
       /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
       .text-blue-600 { color: var(--color-blue); }
@@ -47,7 +46,7 @@
 
             <!-- Seção de Artigos em Destaque -->
             <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h2>
+                <h1 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h1>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {% for post in collections.destaques %}
                         <a href="{{ post.url }}" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -79,7 +78,7 @@
             <div class="pt-[60px]"></div>
 
             <div class="p-4 bg-gray-100 rounded-lg text-center mb-4">
-                <h4 class="font-bold mb-2">Anúncio</h4>
+                <h4 class="font-bold mb-2">Dicas de Livros</h4>
                 <div id ="anuncios_lateral">
                 </div>
             </div>

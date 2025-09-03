@@ -7,17 +7,16 @@
     <!-- Título dinâmico da página -->
     <title>Foca no Blog | Um Blog focado em Tecnologia</title>
 
-    <meta name="description" content="Um Blog focado em Tecnologia, com os melhores tutorias, explicações, artigos, exemplos e muito mais da mundo da programação(javascript, java, node, python, ...), nuvem, frameworks, IA, automação e etc..." />
-    <meta name="keywords" content="programadores, programacao, exemplos, tutoriais, artigos, web, java, python, javascript, js, html, css, ux, scrum, kanban, dicas, melhores notebooks, notebook custo-benefício, comparativos de tecnologicas, nuvem, cloud, aws, azure, gcp" />
+    <meta name="description" content="Domine o mundo da tecnologia! No Foca no Blog, você encontra tutoriais práticos, artigos aprofundados e exemplos de código sobre programação (JavaScript, Python, Java), nuvem, IA e automação. Clique e evolua sua carreira!" />
     <meta name="author" content="Fabio F.S." />
     <meta name="robots" content="index, follow" />
-
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Link para o arquivo CSS de estilos -->
+
     <link rel="stylesheet" href="/public/css/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" onload="this.media='all'"></script>
     <style>
       /* Estilos para o Tailwind que dependem de variáveis do CSS customizado */
       .text-blue-600 { color: var(--color-blue); }
@@ -46,7 +45,7 @@
                     <!-- Título principal do blog com link para a home -->
                     <a href="/" class="text-3xl font-bold text-gray-900 transition-colors duration-200 hover:text-red-500">
                     <span class="flex items-center">
-                        <img src="/public/img/foca2-pqn.png" alt="logo - Foca de óculos" class="mr-3 animate-hue animate-rotate">
+                        <img src="/public/img/foca2-pqn.webp" alt="logo - Foca de óculos" class="mr-3 animate-hue animate-rotate">
                         Foca&nbsp;<span class="text-blue-600">no Blog</span>
                     </span>
                     </a> 
@@ -84,7 +83,7 @@
 
             <!-- Seção de Artigos em Destaque -->
             <section class="container mx-auto px-4 md:px-8 mt-12 mb-20">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h2>
+                <h1 class="text-3xl font-bold text-gray-900 mb-8 text-left">Artigos em Destaque</h1>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
                         <a href="/artigos/como-construir-um-blog/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -93,9 +92,9 @@
                         <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
                         </a>
                     
-                        <a href="/artigos/entenda-o-l-do-solid/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Entendendo o "L" do SOLID</h3>
-                        <p class="text-gray-600 mb-4">Entenda de maneira prática e fácil o "Liskov Substitution Principle"...</p>
+                        <a href="/artigos/entenda-o-i-do-solid/" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Princípios SOLID - Entenda o "I" do SOLID</h3>
+                        <p class="text-gray-600 mb-4">Entenda de maneira prática e fácil o "Interface Segregation Principle"...</p>
                         <span class="text-blue-600 font-medium">Ler mais &rarr;</span>
                         </a>
                     
@@ -122,7 +121,7 @@
             <div class="pt-[60px]"></div>
 
             <div class="p-4 bg-gray-100 rounded-lg text-center mb-4">
-                <h4 class="font-bold mb-2">Anúncio</h4>
+                <h4 class="font-bold mb-2">Dicas de Livros</h4>
                 <div id ="anuncios_lateral">
                 </div>
             </div>
@@ -156,24 +155,31 @@
             },
             
             {
-            "title": "Entendendo o \"O\" do SOLID",
+            "title": "Princípios SOLID - ENtenda o \"O\" do SOLID",
             "url": "/artigos/entenda-o-o-do-solid/",
             "categorias": ["js","solid"],
             "date": "25/08/2025"
             },
             
             {
-            "title": "Entendendo o \"S\" do SOLID",
+            "title": "Princípios SOLID - Entenda o \"S\" do SOLID",
             "url": "/artigos/entenda-o-s-do-solid/",
             "categorias": ["js","solid"],
             "date": "25/08/2025"
             },
             
             {
-            "title": "Entendendo o \"L\" do SOLID",
+            "title": "Princípios SOLID - Entenda o \"L\" do SOLID",
             "url": "/artigos/entenda-o-l-do-solid/",
             "categorias": ["js","solid"],
             "date": "27/08/2025"
+            },
+            
+            {
+            "title": "Princípios SOLID - Entenda o \"I\" do SOLID",
+            "url": "/artigos/entenda-o-i-do-solid/",
+            "categorias": ["js","solid"],
+            "date": "02/09/2025"
             },
             
         ];

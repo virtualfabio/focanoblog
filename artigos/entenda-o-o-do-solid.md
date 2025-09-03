@@ -1,6 +1,6 @@
 ---
 layout: layout.njk
-title: Entendendo o "O" do SOLID
+title: Princípios SOLID - ENtenda o "O" do SOLID
 description: Entenda de maneira prática e fácil o "Open/Closed Principle"
 date: 2025-08-26
 categorias: ["js", "solid"]

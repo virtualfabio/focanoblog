@@ -1,6 +1,13 @@
 
  const anuncios_lateral = [
     {
+      href: "https://amzn.to/3JHKNmK",
+      imgsrc: "https://images-na.ssl-images-amazon.com/images/I/81fcCW3IbbL._AC_UL232_SR232,232_.jpg",
+      alt: "Livro: Desbravando SOLID, adquira na amazon.com.br",
+      title: "Desbravando SOLID",
+      description: "Práticas avançadas para códigos de qualidade em Java moderno..."
+    },
+    {
       href: "https://amzn.to/4msbrhY",
       imgsrc: "https://images-na.ssl-images-amazon.com/images/I/71vbRyfPiXL._AC_UL232_SR232,232_.jpg",
       alt: "Livro: Nexus, adquira na amazon.com.br",
@@ -65,8 +72,8 @@
 
 if(window.innerWidth <= 640) {
     console.log("smrtphone")
-    const anuncios_smartphone = [...anuncios_lateral, ...anuncios_rodape];
-    renderAnuncios(anuncios_smartphone, "anuncios_rodape", 180, 180);
+    const anuncios_para_smartphone = [...anuncios_lateral, ...anuncios_rodape];
+    renderAnuncios(anuncios_para_smartphone, "anuncios_rodape", 180, 180);
 }else{
     renderAnuncios(anuncios_lateral, "anuncios_lateral", 180, 180);
     renderAnuncios(anuncios_rodape, "anuncios_rodape", 180, 180);

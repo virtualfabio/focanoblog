@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foca no Blog -> Princípios SOLID - Entenda o &quot;L&quot; do SOLID</title>
-    <meta name="description" content="Entenda de maneira prática e fácil o &quot;Liskov Substitution Principle&quot;" />
+    <title>Foca no Blog -> Princípios SOLID - Entenda o &quot;I&quot; do SOLID</title>
+    <meta name="description" content="Entenda de maneira prática e fácil o &quot;Interface Segregation Principle&quot;" />
     <meta name="author" content="Fabio F.S." />
     <meta name="robots" content="index, follow" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -79,78 +79,95 @@
         <main class="lg:col-span-3">
           <div class="pt-[35px]"></div>
           <section class="artigo container mx-auto px-4 md:px-8 mt-2 mb-20">
-            <h1 class="text-3xl font-bold text-gray-900">Princípios SOLID - Entenda o &quot;L&quot; do SOLID&nbsp;<span class="data-artigo"> (criado em 28/08/2025)</span></h1>
-            <p>O <strong>SOLID</strong> é um conjunto de princípios de design de software para ajudar desenvolvedores a criarem sistemas mais flexíveis e fáceis de manter.</p>
-<p>Hoje vamos estudar o terceiro princípio:</p>
-<h2>L — Liskov Substitution Principle (Princípio da Substituição de Liskov)</h2>
+            <h1 class="text-3xl font-bold text-gray-900">Princípios SOLID - Entenda o &quot;I&quot; do SOLID&nbsp;<span class="data-artigo"> (criado em 03/09/2025)</span></h1>
+            <p>Continuando nossa série sobre os princípios <strong>SOLID</strong>, vamos para o I: o Princípio da Segregação de Interfaces.</p>
+<p>Se você já viu uma classe que precisa implementar métodos que ela nunca utiliza, é ai que o princípio se encaixa.<br>
+A ideia por trás do 'I' é simples e direta, mas fundamental para um bom design de software.</p>
+<h2>I - Interface Segregation Principle (Princípio da Segregação de Interface)</h2>
 <p>Este princípio afirma que:</p>
 <blockquote>
-<p><strong>&quot;Objetos em um programa devem ser substituíveis por instâncias de seus subtipos, sem alterar a funcionalidade do programa.&quot;</strong><br>
+<p><strong>&quot;Uma cliente não deve ser forçada a depender de interfaces que ela não usa.&quot;</strong><br>
 (<a href="https://pt.wikipedia.org/wiki/SOLID">pt.wikipedia.org</a>, <a href="https://en.wikipedia.org/wiki/SOLID">en.wikipedia.org</a>)</p>
 </blockquote>
 <p>Ou seja:</p>
 <ul>
-<li>Qualquer instância de uma classe derivada (filha) deve poder substituir uma instância da classe base (pai) sem que o comportamento esperado seja alterado.</li>
-<li>Subtipos devem garantir que as funcionalidades se comportem de forma consistente com os tipos base, mantendo contrato e previsibilidade.</li>
+<li>Interfaces grandes e genéricas devem ser divididas em interfaces menores e mais específicas. Interfaces menores são mais fáceis de usar e garantem que as classes que as implementam só se preocupem com o que realmente importa para elas.</li>
 </ul>
-<p>Isso garante coerência, previsibilidade e segurança no uso de herança e polimorfismo.</p>
 <hr>
-<h2>🚫 Exemplo errado (violando LSP)</h2>
-<p>Suponha que temos um sistema que trata documentos que podem ser assinados:</p>
-<pre><code class="language-js">class Documento {
-  assinar() {
-    console.log(&quot;Documento assinado.&quot;);
-  }
+<h2>🚫 Exemplo errado (violando ISP)</h2>
+<p>Vamos imaginar um time de desenvolvimento ágil com diferentes papéis: Desenvolvedor, ScrumMaster e ProductOwner. Para padronizar as responsabilidades, criamos uma única e &quot;inchada&quot; interface chamada IFuncaoTime.</p>
+<pre><code class="language-js">// A &quot;Interface Gorda&quot; que viola o I do SOLID
+public interface IFuncaoTime {
+void ImplementarFuncionalidades();
+void BlindarTime();
+void PriorizarBacklog();
 }
 
-class DocumentoDigital extends Documento {
-  assinar() {
-    console.log(&quot;Documento digital assinado.&quot;);
-  }
+// O Dev é forçado a implementar métodos que não usa
+public class Desenvolvedor implements IFuncaoTime {
+public void ImplementarFuncionalidades() {
+    // O dev implementa o que é da sua responsabilidade
+    System.out.println(&quot;O dev está implementando funcionalidades.&quot;);
 }
 
-class Video extends Documento {
-  // Erroneamente extendemos Documento, mas vídeo não pode ser assinado.
+public void BlindarTime() {
+    // 🤔 O que fazemos aqui? O dev não blinda o time.
+    // Somos forçados a implementar um método vazio ou que lança um erro.
 }
+
+public void PriorizarBacklog() {
+    // 🤔 E aqui? O dev não prioriza o backlog.
+}
+}
+
+const dev = new Desenvolvedor();
+dev.ImplementarFuncionalidades(); // Funciona
+dev.BlindarTime(); // Chamada de um método sem lógica. Isso é um erro de design!
+
 </code></pre>
-<p>Se Video estende Documento, mas não possui o método assinar() corretamente ou lança um erro, estamos violando o princípio de Liskov.<br>
-Isso porque um Video não pode substituir um Documento sem quebrar o comportamento esperado do cliente que tenta invocar assinar().</p>
-<h3>Por que isso acontece?</h3>
-<p>Geralmente, violações ocorrem por abstrações mal feitas — colocar responsabilidades em hierarquias de classes sem refletir o comportamento real.</p>
-<p>No exemplo acima, expandimos a hierarquia de herança pela semelhança conceitual (um vídeo é um tipo de &quot;documento&quot;), mas isso não reflete as capacidades reais dos objetos.</p>
-<h2>✅ Exemplo correto (respeitando LSP)</h2>
-<p>Em vez de usar herança incorreta, podemos separar comportamentos:</p>
-<pre><code class="language-js">class Documento { /* sem método assinar */ }
+<p>Viu o problema? A interface IFuncaoTime força a classe Desenvolvedor a depender de métodos que ela não precisa. Isso torna o código mais frágil e mais difícil de manter.</p>
+<h2>✅ Exemplo correto (respeitando ISP)</h2>
+<p>A solução: segregar! Vamos dividir a interface &quot;inchada&quot; em várias interfaces menores e mais coesas. Cada interface representará um papel ou uma capacidade específica, conforme o seu exemplo.</p>
+<pre><code class="language-js">// Interfaces segregadas e focadas
+public interface IFuncaoDev {
+  void ImplementarFuncionalidades();
+}
 
-class DocumentoAssinavel extends Documento {
-  assinar() {
-    console.log(&quot;Documento assinado.&quot;);
+public interface IFuncaoScrumMaster {
+  void BlindarTime();
+}
+
+public interface IFuncaoProductOwner {
+  void PriorizarBacklog();
+}
+
+// Agora, as classes implementam apenas as interfaces que precisam
+public class Desenvolvedor implements IFuncaoDev {
+  public void ImplementarFuncionalidades() {
+    System.out.println(&quot;O dev está implementando funcionalidades.&quot;);
   }
 }
 
-class DocumentoDigital extends DocumentoAssinavel {
-  assinar() {
-    console.log(&quot;Documento digital assinado.&quot;);
+public class ScrumMaster implements IFuncaoScrumMaster {
+  public void BlindarTime() {
+    System.out.println(&quot;O scrum master está blindando o time.&quot;);
   }
 }
 
-class Video extends Documento {
-  // Aqui, Video não implementa assinar — sem problema.
+public class ProductOwner implements IFuncaoProductOwner {
+  public void PriorizarBacklog() {
+    System.out.println(&quot;O product owner está priorizando o backlog.&quot;);
+  }
 }
+
+const dev = new Desenvolvedor();
+dev.ImplementarFuncionalidades(); // Funciona
+// dev.BlindarTime(); // Isso geraria um erro de compilação ou de tipo, o que é bom!
 </code></pre>
-<p>Agora, qualquer cliente que espere chamar assinar() só deve receber objetos do tipo DocumentoAssinavel, garantindo que o comportamento seja preservado.</p>
-<h2>Por que obedecer ao LSP é importante?</h2>
-<ul>
-<li>Previsibilidade: permite que subclasses se comportem de forma consistente com a classe base.</li>
-<li>Polimorfismo seguro: possibilita usar subclasses onde forem esperadas classes base, sem surpresas no comportamento.</li>
-<li>Manutenção facilitada: evita bugs silenciosos ao evoluir a hierarquia de classes.</li>
-</ul>
-<h2>Conclusão</h2>
-<p>O “L” em SOLID — o Princípio da Substituição de Liskov — garante que subtipos possam substituir seus tipos base sem alterar o funcionamento do programa.<br>
-Sua violação geralmente indica problemas de abstração ou hierarquia mal modelada.</p>
-<p>Aplicar o LSP corretamente torna o código mais robusto, legível e aderente ao paradigma de programação orientada a objetos.</p>
-<p>Para aprender ainda mais sobre SOLID, explore os outros artigos aqui o blob sobre os outros princípios e veja como todos se complementam.</p>
-<p><img src="../../public/img/diagrama-classes-solid-l.png" alt="Diagrama de Classes" title="Diagrama de Classes"></p>
+<p>Com essa abordagem, as classes ficam mais especializadas e menos acopladas a código desnecessário. O Desenvolvedor só se preocupa com o que é de sua responsabilidade. A responsabilidade de cada classe fica clara, e o código se torna mais robusto e fácil de manter.</p>
+<p>Pense nisso como um controle remoto universal. No começo, pode parecer útil, mas o excesso de botões que você nunca usará só torna a experiência pior. Já um controle remoto simples, com apenas os botões da TV, é muito mais prático. É a mesma lógica!</p>
+<p>Então, lembre-se: <strong>interfaces pequenas e focadas são a chave para um código mais limpo e modular</strong>.</p>
+<p><img src="../../public/img/diagrama-classes-solid-i.webp" alt="Diagrama de Classes" title="Diagrama de Classes"></p>
 
            </section>
         </main>
@@ -191,7 +208,7 @@ Sua violação geralmente indica problemas de abstração ou hierarquia mal mode
             });
         });
 
-        //const dataOriginal = "Wed Aug 27 2025 21:00:00 GMT-0300 (Horário Padrão de Brasília)";
+        //const dataOriginal = "Tue Sep 02 2025 21:00:00 GMT-0300 (Horário Padrão de Brasília)";
         //const data = parse(dataOriginal, "yyyy-MM-dd", new Date());
         //const dataFormatada = format(data, "dd/MM/yyyy");
         //document.getElementById("data").innerText = ` (criado em ${dataFormatada})`;

@@ -11,7 +11,7 @@ npx @11ty/eleventy
 npx @11ty/eleventy --serve
 
 
-
+npm install -D tailwindcss postcss autoprefixer
 
 
 firebase deploy
@@ -23,4 +23,4 @@ git status
 git add .
 git commit -m "...."
 ##git remote add origin https://github.com/virtualfabio/focanoblog.git
-git push -u origin main
+git push -u origin master

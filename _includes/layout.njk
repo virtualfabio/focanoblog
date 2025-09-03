@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foca no Blog | Um Blog focado em Tecnologia</title>
-
-    <meta name="description" content="Um Blog focado em Tecnologia, com os melhores tutorias, explicações, artigos, exemplos e muito mais da mundo da programação(javascript, java, node, python, ...), nuvem, frameworks, IA, automação e etc..." />
-    <meta name="keywords" content="programadores, programacao, exemplos, tutoriais, artigos, web, java, python, javascript, js, html, css, ux, scrum, kanban, dicas, melhores notebooks, notebook custo-benefício, comparativos de tecnologicas, nuvem, cloud, aws, azure, gcp" />
+    <title>Foca no Blog -> {{title}}</title>
+    <meta name="description" content="{{description}}" />
     <meta name="author" content="Fabio F.S." />
     <meta name="robots" content="index, follow" />
-
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <!-- Link para a fonte Inter do Google Fonts para um visual moderno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +36,6 @@
 
     {% include "header.html" %}
 
-    <!-- Layout Principal com Colunas Laterais para Anúncios -->
     <div class="container mx-auto px-4 md:px-0 lg:grid lg:grid-cols-4 lg:gap-12">
 
         <!-- Coluna Central com Conteúdo Principal -->
@@ -53,9 +50,8 @@
         <!-- Coluna Direita para Anúncios (visível apenas em telas grandes) -->
         <aside class="hidden lg:block">
             <div class="pt-[60px]"></div>
-
             <div class="p-4 bg-gray-100 rounded-lg text-center mb-4">
-                <h4 class="font-bold mb-2">Anúncio</h4>
+                <h4 class="font-bold mb-2">Dicas de Livros</h4>
                 <div id ="anuncios_lateral">
                 </div>
             </div>    
